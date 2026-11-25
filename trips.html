@@ -1,107 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Trips | Travelora</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+    <style>
+        /* ========================================
+           TRAVELORA MY TRIPS PAGE
+        ======================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f8fc;
+            color: #182b49;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button, input, select {
+            font-family: inherit;
+        }
+
+        /* HEADER */
+
+        .trips-header {
+            background: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 6%;
+            gap: 25px;
+            box-shadow: 0 3px 18px rgba(20, 50, 80, 0.07);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .trips-logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #087f8c;
+            white-space: nowrap;
+        }
+
+        .trips-nav {
+            display: flex;
+            align-items: center;
+            gap: 23px;
+            flex-wrap: wrap;
+        }
+
+        .trips-nav a {
+            color: #526079;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .trips-nav a:hover,
+        .trips-nav a.active {
+            color: #078b98;
+        }
+
+        .trips-nav .login-link {
+            background: #087f8c;
+            color: white;
+            padding: 10px 19px;
+            border-radius: 9px;
+        }
+
+        .trips-nav .login-link:hover {
+            background: #06636e;
+            color: white;
+        }
+
+        /* PAGE */
+
+        .trips-container {
+            max-width: 1250px;
+            margin: auto;
+            padding: 35px 25px 70px;
+        }
+
+        .breadcrumb {
+            font-size: 12px;
+            color: #8491a7;
+            margin-bottom: 22px;
+        }
+
+        .breadcrumb a {
+            color: #087f8c;
+        }
+
+        /* HERO */
+
+        .trips-hero {
+            min-height: 270px;
+            border-radius: 22px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 40px 45px;
+            color: white;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(5, 34, 56, 0.91),
+                    rgba(5, 50, 70, 0.65),
+                    rgba(5, 50, 70, 0.12)
+                ),
+                url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=85")
+                center 50% / cover;
+            margin-bottom: 28px;
+        }
+
+        .trips-hero-content {
+            max-width: 610px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 7px 12px;
+            background: rgba(255, 255, 255, 0.17);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 30px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .trips-hero h1 {
+            font-size: clamp(30px, 4vw, 43px);
+            line-height: 1.25;
+            margin: 0 0 12px;
+        }
+
+        .trips-hero p {
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 0;
+            color: #e5f0f6;
+        }
+
+        /* SUMMARY */
+
+        .trip-summary {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 17px;
+            margin-bottom: 35px;
+        }
+
+        .summary-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #ffffff;
+            padding: 23px 19px;
+            border-radius: 15px;
+            border: 1px solid #edf1f6;
+            box-shadow: 0 5px 18px rgba(30, 55, 90, 0.035);
+        }
+
+        .summary-icon {
+            width: 49px;
+            height: 49px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .icon-blue {
+            background: #e9f2ff;
+            color: #3479d5;
+        }
+
+        .icon-green {
+            background: #e5f8f0;
+            color: #179b68;
+        }
+
+        .icon-orange {
+            background: #fff1df;
+            color: #ed932d;
+        }
+
+        .icon-purple {
+            background: #f1eaff;
+            color: #8c64d9;
+        }
+
+        .summary-card p {
+            color: #8792a5;
+            font-size: 11px;
+            margin: 0 0 5px;
+        }
+
+        .summary-card h3 {
+            font-size: 24px;
+            margin: 0;
+            color: #172b48;
+        }
+
+        /* SECTION HEADER */
+
+        .trips-section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 19px;
+        }
+
+        .trips-section-heading h2 {
+            font-size: 23px;
+            margin: 0 0 5px;
+        }
+
+        .trips-section-heading p {
+            font-size: 12px;
+            color: #8491a7;
+            margin: 0;
+        }
+
+        .book-new-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 17px;
+            background: #087f8c;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .book-new-btn:hover {
+            background: #06636e;
+            transform: translateY(-2px);
+        }
+
+        /* FILTERS */
+
+        .trips-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: #ffffff;
+            padding: 15px;
+            border: 1px solid #edf1f6;
+            border-radius: 14px;
+            margin-bottom: 22px;
+        }
+
+        .trip-search {
+            flex: 1;
+            min-width: 210px;
+            position: relative;
+        }
+
+        .trip-search i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8792a5;
+        }
+
+        .trip-search input {
+            width: 100%;
+            padding: 12px 14px 12px 39px;
+            border: 1px solid #e5eaf1;
+            outline: none;
+            border-radius: 9px;
+            font-size: 12px;
+            background: #fbfcfe;
+        }
+
+        .trip-search input:focus {
+            border-color: #087f8c;
+        }
+
+        .trip-filter {
+            padding: 12px 13px;
+            border: 1px solid #e5eaf1;
+            border-radius: 9px;
+            background: white;
+            color: #526079;
+            outline: none;
+            font-size: 12px;
+            min-width: 155px;
+        }
+
+        /* TRIP CARDS */
+
+        .trip-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 23px;
+        }
+
+        .trip-card {
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #eaf0f6;
+            border-radius: 17px;
+            box-shadow: 0 5px 20px rgba(30, 55, 90, 0.045);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .trip-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(30, 55, 90, 0.09);
+        }
+
+        .trip-image {
+            height: 190px;
+            position: relative;
+            background: #eaf0f6;
+            overflow: hidden;
+        }
+
+        .trip-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .trip-card:hover .trip-image img {
+            transform: scale(1.045);
+        }
+
+        .trip-service {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #31445e;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .trip-status {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            padding: 8px 11px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            background: #e5f8f0;
+            color: #13865b;
+        }
+
+        .status-cancelled {
+            background: #ffebeb;
+            color: #cf4141;
+        }
+
+        .status-completed {
+            background: #e9f2ff;
+            color: #2869bc;
+        }
+
+        .status-today {
+            background: #fff1df;
+            color: #b76c10;
+        }
+
+        .trip-card-content {
+            padding: 22px;
+        }
+
+        .trip-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 17px;
+        }
+
+        .trip-title-row h3 {
+            font-size: 20px;
+            margin: 0 0 7px;
+            color: #182b49;
+            overflow-wrap: anywhere;
+        }
+
+        .trip-subtitle {
+            font-size: 11px;
+            color: #8b97a9;
+        }
+
+        .trip-price {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .trip-price small {
+            display: block;
+            font-size: 10px;
+            color: #8b97a9;
+            margin-bottom: 4px;
+        }
+
+        .trip-price strong {
+            color: #087f8c;
+            font-size: 19px;
+        }
+
+        .trip-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 12px;
+            padding: 17px 0;
+            border-top: 1px solid #edf1f6;
+            border-bottom: 1px solid #edf1f6;
+        }
+
+        .trip-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .trip-detail i {
+            color: #087f8c;
+            margin-top: 3px;
+            font-size: 14px;
+        }
+
+        .trip-detail span {
+            display: block;
+            font-size: 10px;
+            color: #8b97a9;
+            margin-bottom: 4px;
+        }
+
+        .trip-detail strong {
+            display: block;
+            color: #34445d;
+            font-size: 11px;
+            overflow-wrap: anywhere;
+        }
+
+        .trip-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .trip-reference {
+            font-size: 10px;
+            color: #8b97a9;
+        }
+
+        .trip-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .trip-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .cancel-btn {
+            color: #c53d3d;
+            background: #fff0f0;
+        }
+
+        .cancel-btn:hover {
+            background: #ffe0e0;
+        }
+
+        .delete-btn {
+            color: #fff;
+            background: #df5151;
+        }
+
+        .delete-btn:hover {
+            background: #bf3333;
+        }
+
+        .disabled-btn {
+            color: #8b97a9;
+            background: #f0f3f7;
+            cursor: default;
+        }
+
+        .trip-notice {
+            margin-top: 15px;
+            padding: 11px 12px;
+            background: #f4f8fc;
+            border-radius: 8px;
+            color: #697990;
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        /* EMPTY STATE */
+
+        .empty-state {
+            background: #ffffff;
+            border: 1px solid #eaf0f6;
+            border-radius: 18px;
+            padding: 55px 20px;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        .empty-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #e9f7f8;
+            color: #087f8c;
+            font-size: 37px;
+        }
+
+        .empty-state h3 {
+            font-size: 22px;
+            margin: 0 0 10px;
+        }
+
+        .empty-state p {
+            color: #8491a7;
+            font-size: 13px;
+            line-height: 1.8;
+            max-width: 430px;
+            margin: 0 auto 22px;
+        }
+
+        .empty-state .book-new-btn {
+            display: inline-flex;
+        }
+
+        /* FOOTER */
+
+        .trips-footer {
+            background: #102a43;
+            color: #d6e1eb;
+            padding: 32px 6%;
+            text-align: center;
+        }
+
+        .trips-footer h3 {
+            color: #ffffff;
+            margin: 0 0 9px;
+            font-size: 22px;
+        }
+
+        .trips-footer p {
+            font-size: 11px;
+            color: #aebfce;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 19px 0;
+        }
+
+        .footer-links a {
+            font-size: 11px;
+            color: #d6e1eb;
+        }
+
+        .footer-links a:hover {
+            color: #63d5db;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1050px) {
+            .trips-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .trips-nav {
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .trip-summary {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .trips-container {
+                padding: 23px 15px 45px;
+            }
+
+            .trips-hero {
+                min-height: 245px;
+                padding: 28px 23px;
+                background-position: center;
+            }
+
+            .trips-hero h1 {
+                font-size: 30px;
+            }
+
+            .trip-list {
+                grid-template-columns: 1fr;
+            }
+
+            .trips-section-heading {
+                align-items: flex-start;
+            }
+
+            .trips-section-heading h2 {
+                font-size: 20px;
+            }
+
+            .trip-card-footer {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .trips-nav {
+                gap: 13px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .trips-logo {
+                font-size: 23px;
+            }
+
+            .trips-nav a {
+                font-size: 11px;
+            }
+
+            .trip-summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .summary-card {
+                padding: 14px 10px;
+                gap: 9px;
+            }
+
+            .summary-icon {
+                width: 37px;
+                height: 37px;
+                font-size: 15px;
+            }
+
+            .summary-card h3 {
+                font-size: 20px;
+            }
+
+            .summary-card p {
+                font-size: 9px;
+            }
+
+            .trip-title-row h3 {
+                font-size: 17px;
+            }
+
+            .trip-price strong {
+                font-size: 16px;
+            }
+
+            .trip-details {
+                gap: 15px 8px;
+            }
+
+            .trip-filter {
+                width: 100%;
+            }
+
+            .trip-search {
+                min-width: 100%;
+            }
+
+            .book-new-btn {
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ========================================
+     HEADER
+======================================== -->
+
+<header class="trips-header">
+
+    <a href="index.html" class="trips-logo">
+        Travelora <i class="fa-solid fa-plane-departure"></i>
+    </a>
+
+    <nav class="trips-nav">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="offers.html">Offers</a>
+        <a href="packages.html">Packages</a>
+        <a href="activities.html">Activities</a>
+        <a href="wishlist.html">
+            <i class="fa-regular fa-heart"></i> Wishlist
+        </a>
+        <a href="trips.html" class="active">
+            <i class="fa-solid fa-suitcase"></i> My Trips
+        </a>
+        <a href="login.html" class="login-link">Login</a>
+    </nav>
+
+</header>
+
+
+<main class="trips-container">
+
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fa-solid fa-angle-right"></i>
+        My Trips
+    </div>
+
+
+    <!-- ====================================
+         HERO
+    ==================================== -->
+
+    <section class="trips-hero">
+
+        <div class="trips-hero-content">
+
+            <span class="hero-label">
+                <i class="fa-solid fa-earth-asia"></i>
+                YOUR TRAVEL DASHBOARD
+            </span>
+
+            <h1>Your Journeys,<br>All in One Place.</h1>
+
+            <p>
+                Manage your bookings, keep track of upcoming adventures,
+                and revisit the memories you've made with Travelora.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ====================================
+         BOOKING SUMMARY
+    ==================================== -->
+
+    <section class="trip-summary">
+
+        <div class="summary-card">
+            <div class="summary-icon icon-blue">
+                <i class="fa-solid fa-suitcase-rolling"></i>
+            </div>
+
+            <div>
+                <p>Total Bookings</p>
+                <h3 id="totalTrips">0</h3>
+            </div>
+        </div>
+
+
+        <div class="summary-card">
+            <div class="summary-icon icon-green">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+
+            <div>
+                <p>Upcoming Trips</p>
+                <h3 id="upcomingTrips">0</h3>
+            </div>
+        </div>
+
+
+        <div class="summary-card">
+            <div class="summary-icon icon-orange">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div>
+                <p>Completed Trips</p>
+                <h3 id="completedTrips">0</h3>
+            </div>
+        </div>
+
+
+        <div class="summary-card">
+            <div class="summary-icon icon-purple">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+            </div>
+
+            <div>
+                <p>Total Booking Value</p>
+                <h3 id="totalSpent">₹0</h3>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ====================================
+         TRIPS HEADING
+    ==================================== -->
+
+    <section>
+
+        <div class="trips-section-heading">
+
+            <div>
+                <h2>My Bookings</h2>
+                <p>All your reservations, neatly organised.</p>
+            </div>
+
+            <a href="destinations.html" class="book-new-btn">
+                <i class="fa-solid fa-plus"></i>
+                Book a Trip
+            </a>
+
+        </div>
+
+
+        <!-- SEARCH AND FILTER -->
+
+        <div class="trips-toolbar">
+
+            <div class="trip-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    id="tripSearch"
+                    placeholder="Search destinations or booking IDs..."
+                    aria-label="Search trips">
+            </div>
+
+
+            <select id="tripStatusFilter"
+                    class="trip-filter"
+                    aria-label="Filter by trip status">
+
+                <option value="All">All Bookings</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Travel Today">Travel Today</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+
+            </select>
+
+
+            <select id="tripServiceFilter"
+                    class="trip-filter"
+                    aria-label="Filter by service">
+
+                <option value="All">All Services</option>
+                <option value="Flight">Flights</option>
+                <option value="Hotel">Hotels</option>
+                <option value="Train">Trains</option>
+                <option value="Bus">Buses</option>
+                <option value="Package">Packages</option>
+                <option value="Activity">Activities</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- BOOKINGS ARE ADDED HERE -->
+
+        <div class="trip-list" id="tripItems"></div>
+
+    </section>
+
+</main>
+
+
+<!-- ========================================
+     FOOTER
+======================================== -->
+
+<footer class="trips-footer">
+
+    <h3>Travelora <i class="fa-solid fa-plane"></i></h3>
+    <p>
+        One Platform. Every Journey.<br>
+        Discover new places and make every journey memorable.
+    </p>
+
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="offers.html">Offers</a>
+        <a href="packages.html">Packages</a>
+        <a href="activities.html">Activities</a>
+        <a href="wishlist.html">Wishlist</a>
+    </div>
+
+    <p>© 2026 Travelora. All rights reserved.</p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
 <script>
-/* =========================================================
+/* ==============================================
    TRAVELORA - MY TRIPS JAVASCRIPT
-   USER-WISE BOOKING INTEGRATION
-   BOOKING + TRIP + ADMIN DASHBOARD SYNCHRONISATION
 
-   Features:
-   1. Displays bookings of the logged-in user only.
-   2. Reads traveloraTrips and travelBookings.
-   3. Supports different booking data field names.
-   4. Automatically updates booking summaries.
-   5. Supports destination-specific images.
-   6. Supports search and filters.
-   7. Synchronises cancellation with admin records.
-   8. Allows deletion of completed trips from trip history.
-   9. Refreshes when booking data changes.
-========================================================= */
+   Uses the existing traveloraTrips localStorage key.
+   Supports search, filters, status, cancellation,
+   completed-trip deletion and booking summaries.
+============================================== */
 
 
-/* =========================================================
-   STORAGE KEYS
-========================================================= */
+/* GET SAVED BOOKINGS */
 
-const TRAVELORA_MY_TRIPS_KEY = "traveloraTrips";
-const TRAVELORA_MY_BOOKINGS_KEY = "travelBookings";
-
-
-/* =========================================================
-   CURRENT USER
-========================================================= */
-
-function traveloraGetCurrentUser() {
-
-    return {
-
-        loggedIn:
-            localStorage.getItem("isLoggedIn") === "true",
-
-        id:
-            localStorage.getItem("userId") || "",
-
-        name:
-            localStorage.getItem("userName") || "",
-
-        email:
-            localStorage.getItem("userEmail") || "",
-
-        phone:
-            localStorage.getItem("userPhone") || ""
-
-    };
-
-}
-
-
-/* =========================================================
-   CHECK LOGIN
-========================================================= */
-
-function traveloraCheckTripsLogin() {
-
-    const user = traveloraGetCurrentUser();
-
-    if (!user.loggedIn) {
-
-        alert("Please login to view your trips.");
-
-        localStorage.setItem(
-            "redirectAfterLogin",
-            "trips.html"
-        );
-
-        window.location.replace("login.html");
-
-        return false;
-
-    }
-
-    return true;
-
-}
-
-
-/* =========================================================
-   GET ARRAY FROM LOCAL STORAGE
-========================================================= */
-
-function traveloraGetStoredArray(key) {
+function traveloraGetTrips() {
 
     try {
 
-        const saved = JSON.parse(
-            localStorage.getItem(key) || "[]"
-        );
+        const saved =
+            JSON.parse(
+                localStorage.getItem("traveloraTrips") || "[]"
+            );
 
         return Array.isArray(saved) ? saved : [];
 
     } catch (error) {
 
-        console.error(
-            "Unable to read storage:",
-            key,
-            error
-        );
+        console.error("Unable to read saved trips:", error);
 
         return [];
 
@@ -110,626 +1000,27 @@ function traveloraGetStoredArray(key) {
 }
 
 
-/* =========================================================
-   GET SAVED TRIPS
-========================================================= */
-
-function traveloraGetTrips() {
-
-    return traveloraGetStoredArray(
-        TRAVELORA_MY_TRIPS_KEY
-    );
-
-}
-
-
-/* =========================================================
-   GET MASTER BOOKINGS
-========================================================= */
-
-function traveloraGetMasterBookings() {
-
-    return traveloraGetStoredArray(
-        TRAVELORA_MY_BOOKINGS_KEY
-    );
-
-}
-
-
-/* =========================================================
-   SAVE TRIPS
-========================================================= */
+/* SAVE BOOKINGS */
 
 function traveloraSaveTrips(trips) {
 
     localStorage.setItem(
-        TRAVELORA_MY_TRIPS_KEY,
+        "traveloraTrips",
         JSON.stringify(trips)
     );
 
-    window.dispatchEvent(
-        new Event("traveloraDataUpdated")
-    );
-
 }
 
 
-/* =========================================================
-   SAVE MASTER BOOKINGS
-========================================================= */
-
-function traveloraSaveMasterBookings(bookings) {
-
-    localStorage.setItem(
-        TRAVELORA_MY_BOOKINGS_KEY,
-        JSON.stringify(bookings)
-    );
-
-    window.dispatchEvent(
-        new Event("traveloraDataUpdated")
-    );
-
-}
-
-
-/* =========================================================
-   NORMALISE TEXT
-========================================================= */
-
-function traveloraNormaliseText(value) {
-
-    return String(value ?? "")
-        .trim()
-        .toLowerCase();
-
-}
-
-
-/* =========================================================
-   GET BOOKING ID
-========================================================= */
-
-function traveloraGetBookingId(trip) {
-
-    return String(
-        trip.id ??
-        trip.bookingId ??
-        trip.bookingID ??
-        trip.referenceId ??
-        trip.reference ??
-        ""
-    );
-
-}
-
-
-/* =========================================================
-   GET OWNER DETAILS
-========================================================= */
-
-function traveloraGetOwnerDetails(record) {
-
-    const userDetails =
-        record.user ||
-        record.userDetails ||
-        record.customer ||
-        {};
-
-    return {
-
-        id:
-            record.userId ||
-            record.customerId ||
-            userDetails.id ||
-            userDetails.userId ||
-            "",
-
-        email:
-            record.userEmail ||
-            record.email ||
-            record.customerEmail ||
-            userDetails.email ||
-            "",
-
-        phone:
-            record.userPhone ||
-            record.phone ||
-            record.mobile ||
-            record.contact ||
-            userDetails.phone ||
-            userDetails.mobile ||
-            "",
-
-        name:
-            record.userName ||
-            record.customerName ||
-            record.name ||
-            userDetails.name ||
-            userDetails.fullName ||
-            ""
-
-    };
-
-}
-
-
-/* =========================================================
-   CHECK WHETHER BOOKING BELONGS TO CURRENT USER
-
-   A booking without owner information is not displayed
-   because it cannot safely be assigned to the current user.
-========================================================= */
-
-function traveloraIsCurrentUsersTrip(trip) {
-
-    const currentUser = traveloraGetCurrentUser();
-
-    const owner = traveloraGetOwnerDetails(trip);
-
-    const currentId =
-        traveloraNormaliseText(currentUser.id);
-
-    const currentEmail =
-        traveloraNormaliseText(currentUser.email);
-
-    const currentPhone =
-        traveloraNormaliseText(currentUser.phone);
-
-    const currentName =
-        traveloraNormaliseText(currentUser.name);
-
-    const ownerId =
-        traveloraNormaliseText(owner.id);
-
-    const ownerEmail =
-        traveloraNormaliseText(owner.email);
-
-    const ownerPhone =
-        traveloraNormaliseText(owner.phone);
-
-    const ownerName =
-        traveloraNormaliseText(owner.name);
-
-
-    if (currentId && ownerId) {
-
-        return currentId === ownerId;
-
-    }
-
-
-    if (currentEmail && ownerEmail) {
-
-        return currentEmail === ownerEmail;
-
-    }
-
-
-    if (currentPhone && ownerPhone) {
-
-        return currentPhone === ownerPhone;
-
-    }
-
-
-    if (
-        currentName &&
-        ownerName &&
-        !currentEmail &&
-        !currentPhone &&
-        !currentId
-    ) {
-
-        return currentName === ownerName;
-
-    }
-
-
-    return false;
-
-}
-
-
-/* =========================================================
-   FIND RELATED MASTER BOOKING
-
-   Some older trip records may not contain user information.
-   We try to find their matching master booking.
-========================================================= */
-
-function traveloraFindMasterBooking(trip, bookings) {
-
-    const tripId = traveloraGetBookingId(trip);
-
-    if (!tripId) return null;
-
-    return bookings.find(booking => {
-
-        return (
-            traveloraGetBookingId(booking) === tripId
-        );
-
-    }) || null;
-
-}
-
-
-/* =========================================================
-   CHECK BOOKING OWNERSHIP USING MASTER RECORD
-========================================================= */
-
-function traveloraBelongsToCurrentUser(trip, bookings) {
-
-    if (traveloraIsCurrentUsersTrip(trip)) {
-
-        return true;
-
-    }
-
-    const relatedBooking =
-        traveloraFindMasterBooking(trip, bookings);
-
-    if (relatedBooking) {
-
-        return traveloraIsCurrentUsersTrip(
-            relatedBooking
-        );
-
-    }
-
-    return false;
-
-}
-
-
-/* =========================================================
-   GET DESTINATION
-========================================================= */
-
-function traveloraGetDestination(trip) {
-
-    return (
-
-        trip.destination ||
-        trip.to ||
-        trip.toLocation ||
-        trip.hotelName ||
-        trip.packageName ||
-        trip.activityName ||
-        trip.place ||
-        trip.location ||
-        trip.title ||
-        trip.name ||
-        "Your Destination"
-
-    );
-
-}
-
-
-/* =========================================================
-   GET SERVICE TYPE
-========================================================= */
-
-function traveloraGetService(trip) {
-
-    return (
-
-        trip.service ||
-        trip.serviceType ||
-        trip.bookingType ||
-        trip.category ||
-        trip.type ||
-        "Travel"
-
-    );
-
-}
-
-
-/* =========================================================
-   GET TRAVEL DATE
-========================================================= */
-
-function traveloraGetTravelDate(trip) {
-
-    return (
-
-        trip.departureDate ||
-        trip.travelDate ||
-        trip.date ||
-        trip.journeyDate ||
-        trip.checkIn ||
-        trip.checkInDate ||
-        trip.bookingDate ||
-        trip.startDate ||
-        ""
-
-    );
-
-}
-
-
-/* =========================================================
-   GET TRAVELLER COUNT
-========================================================= */
-
-function traveloraGetTravellerCount(trip) {
-
-    return (
-
-        trip.travellers ||
-        trip.travelers ||
-        trip.passengers ||
-        trip.guestCount ||
-        trip.numberOfGuests ||
-        trip.persons ||
-        trip.quantity ||
-        1
-
-    );
-
-}
-
-
-/* =========================================================
-   GET BOOKING PRICE
-========================================================= */
-
-function traveloraGetPrice(trip) {
-
-    const amount =
-
-        trip.finalPrice ??
-        trip.totalAmount ??
-        trip.totalPrice ??
-        trip.amount ??
-        trip.price ??
-        trip.grandTotal ??
-        trip.bookingAmount ??
-        trip.payableAmount ??
-        0;
-
-    const parsed = Number(
-        String(amount).replace(/[₹,\s]/g, "")
-    );
-
-    return Number.isFinite(parsed) ? parsed : 0;
-
-}
-
-
-/* =========================================================
-   NORMALISE SERVICE NAME
-========================================================= */
-
-function traveloraNormaliseService(service) {
-
-    const value = String(
-        service || "Travel"
-    ).toLowerCase();
-
-
-    if (
-        value.includes("flight") ||
-        value.includes("airline") ||
-        value.includes("air")
-    ) {
-
-        return "Flight";
-
-    }
-
-
-    if (
-        value.includes("hotel") ||
-        value.includes("stay") ||
-        value.includes("resort") ||
-        value.includes("room")
-    ) {
-
-        return "Hotel";
-
-    }
-
-
-    if (
-        value.includes("train") ||
-        value.includes("rail")
-    ) {
-
-        return "Train";
-
-    }
-
-
-    if (value.includes("bus")) {
-
-        return "Bus";
-
-    }
-
-
-    if (
-        value.includes("package") ||
-        value.includes("tour")
-    ) {
-
-        return "Package";
-
-    }
-
-
-    if (
-        value.includes("activity") ||
-        value.includes("adventure")
-    ) {
-
-        return "Activity";
-
-    }
-
-
-    if (value.includes("cab")) {
-
-        return "Cab";
-
-    }
-
-
-    return service || "Travel";
-
-}
-
-
-/* =========================================================
-   NORMALISE BOOKING RECORD
-
-   Converts different booking structures into a common format.
-========================================================= */
-
-function traveloraNormaliseBooking(record) {
-
-    return {
-
-        ...record,
-
-        id: traveloraGetBookingId(record),
-
-        destination:
-            traveloraGetDestination(record),
-
-        service:
-            traveloraNormaliseService(
-                traveloraGetService(record)
-            ),
-
-        departureDate:
-            traveloraGetTravelDate(record),
-
-        travellers:
-            traveloraGetTravellerCount(record),
-
-        finalPrice:
-            traveloraGetPrice(record)
-
-    };
-
-}
-
-
-/* =========================================================
-   GET CURRENT USER'S BOOKINGS
-
-   Reads both:
-   traveloraTrips
-   travelBookings
-
-   Uses booking IDs to avoid duplicate cards.
-========================================================= */
-
-function traveloraGetCurrentUsersTrips() {
-
-    const savedTrips =
-        traveloraGetTrips();
-
-    const masterBookings =
-        traveloraGetMasterBookings();
-
-
-    const userTrips = [];
-
-
-    /* FIRST: READ THE TRIPS ARRAY */
-
-    savedTrips.forEach(trip => {
-
-        if (
-            traveloraBelongsToCurrentUser(
-                trip,
-                masterBookings
-            )
-        ) {
-
-            const relatedBooking =
-                traveloraFindMasterBooking(
-                    trip,
-                    masterBookings
-                );
-
-            const mergedRecord = {
-
-                ...(relatedBooking || {}),
-                ...trip
-
-            };
-
-            userTrips.push(
-                traveloraNormaliseBooking(
-                    mergedRecord
-                )
-            );
-
-        }
-
-    });
-
-
-    /* SECOND: INCLUDE BOOKINGS NOT PRESENT IN TRIPS */
-
-    masterBookings.forEach(booking => {
-
-        if (
-            !traveloraIsCurrentUsersTrip(booking)
-        ) {
-
-            return;
-
-        }
-
-
-        const bookingId =
-            traveloraGetBookingId(booking);
-
-
-        const alreadyExists = userTrips.some(trip => {
-
-            return (
-                traveloraGetBookingId(trip) === bookingId
-            );
-
-        });
-
-
-        if (!alreadyExists) {
-
-            userTrips.push(
-                traveloraNormaliseBooking(booking)
-            );
-
-        }
-
-    });
-
-
-    return userTrips;
-
-}
-
-
-/* =========================================================
-   DATE HELPERS
-========================================================= */
+/* DATE HELPERS */
 
 function traveloraGetDate(dateString) {
 
     if (!dateString) return null;
 
-
     const match = String(dateString).match(
         /^(\d{4})-(\d{2})-(\d{2})$/
     );
-
 
     if (match) {
 
@@ -737,38 +1028,25 @@ function traveloraGetDate(dateString) {
         const month = Number(match[2]);
         const day = Number(match[3]);
 
-        const date = new Date(
-            year,
-            month - 1,
-            day
-        );
-
+        const date = new Date(year, month - 1, day);
 
         if (
             date.getFullYear() !== year ||
             date.getMonth() !== month - 1 ||
             date.getDate() !== day
         ) {
-
             return null;
-
         }
-
 
         return date;
 
     }
 
-
     const parsed = new Date(dateString);
 
-
     if (Number.isNaN(parsed.getTime())) {
-
         return null;
-
     }
-
 
     return new Date(
         parsed.getFullYear(),
@@ -778,10 +1056,6 @@ function traveloraGetDate(dateString) {
 
 }
 
-
-/* =========================================================
-   TODAY
-========================================================= */
 
 function traveloraToday() {
 
@@ -796,860 +1070,487 @@ function traveloraToday() {
 }
 
 
-/* =========================================================
-   FORMAT DATE
-========================================================= */
-
 function traveloraFormatDate(dateString) {
 
-    const date =
-        traveloraGetDate(dateString);
-
+    const date = traveloraGetDate(dateString);
 
     if (!date) {
-
         return dateString || "Not available";
-
     }
 
-
-    return date.toLocaleDateString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        }
-    );
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
 
 }
 
 
-/* =========================================================
-   TRIP STATUS
-========================================================= */
+/* TRIP STATUS */
 
 function traveloraTripStatus(trip) {
 
-    const savedStatus =
-        String(trip.status || "").toLowerCase();
-
-
     if (
-        savedStatus === "cancelled" ||
-        savedStatus === "canceled"
+        String(trip.status || "").toLowerCase() === "cancelled"
     ) {
-
         return "Cancelled";
-
     }
-
 
     const departureDate =
-        traveloraGetDate(
-            traveloraGetTravelDate(trip)
-        );
-
+        traveloraGetDate(trip.departureDate);
 
     if (!departureDate) {
-
-        if (
-            savedStatus === "completed" ||
-            savedStatus === "complete"
-        ) {
-
-            return "Completed";
-
-        }
-
         return "Confirmed";
-
     }
 
-
-    const today =
-        traveloraToday();
-
+    const today = traveloraToday();
 
     if (departureDate < today) {
-
         return "Completed";
-
     }
 
-
-    if (
-        departureDate.getTime() === today.getTime()
-    ) {
-
+    if (departureDate.getTime() === today.getTime()) {
         return "Travel Today";
-
     }
-
 
     return "Confirmed";
 
 }
 
 
-/* =========================================================
-   CANCELLATION RULE
-========================================================= */
+/* CANCELLATION RULE */
 
 function traveloraCanCancel(trip) {
 
     if (
-        String(trip.status || "").toLowerCase() === "cancelled" ||
-        String(trip.status || "").toLowerCase() === "canceled"
+        String(trip.status || "").toLowerCase() === "cancelled"
     ) {
-
         return false;
-
     }
-
 
     const departureDate =
-        traveloraGetDate(
-            traveloraGetTravelDate(trip)
-        );
-
+        traveloraGetDate(trip.departureDate);
 
     if (!departureDate) {
-
         return false;
-
     }
 
-
     const diffDays = Math.round(
-
-        (
-            departureDate -
-            traveloraToday()
-        ) / 86400000
-
+        (departureDate - traveloraToday()) / 86400000
     );
-
 
     return diffDays >= 1;
 
 }
 
 
-/* =========================================================
-   FORMAT PRICE
-========================================================= */
+/* FORMAT PRICE */
 
 function traveloraFormatPrice(amount) {
 
     const price = Number(amount);
 
-
     return "₹" + (
-
-        Number.isFinite(price)
-            ? price
-            : 0
-
-    ).toLocaleString(
-        "en-IN",
-        {
-            maximumFractionDigits: 2
-        }
-    );
+        Number.isFinite(price) ? price : 0
+    ).toLocaleString("en-IN", {
+        maximumFractionDigits: 2
+    });
 
 }
 
 
-/* =========================================================
-   SERVICE ICON
-========================================================= */
+/* NORMALISE SERVICE NAME */
+
+function traveloraNormaliseService(service) {
+
+    const value = String(service || "Travel").toLowerCase();
+
+    if (value.includes("flight") || value.includes("airline")) {
+        return "Flight";
+    }
+
+    if (value.includes("hotel") || value.includes("stay") ||
+        value.includes("resort") || value.includes("room")) {
+        return "Hotel";
+    }
+
+    if (value.includes("train") || value.includes("rail")) {
+        return "Train";
+    }
+
+    if (value.includes("bus")) {
+        return "Bus";
+    }
+
+    if (value.includes("package") || value.includes("tour")) {
+        return "Package";
+    }
+
+    if (value.includes("activity") || value.includes("adventure")) {
+        return "Activity";
+    }
+
+    return String(service || "Travel");
+
+}
+
+
+/* SERVICE ICON */
 
 function traveloraServiceIcon(service) {
 
-    const normalised =
-        traveloraNormaliseService(service);
-
+    const normalised = traveloraNormaliseService(service);
 
     const icons = {
-
         Flight: "fa-plane",
-
         Hotel: "fa-hotel",
-
         Train: "fa-train",
-
         Bus: "fa-bus",
-
         Package: "fa-suitcase-rolling",
-
         Activity: "fa-person-hiking",
-
-        Cab: "fa-taxi",
-
         Travel: "fa-earth-asia"
-
     };
 
-
-    return (
-        icons[normalised] ||
-        "fa-earth-asia"
-    );
+    return icons[normalised] || "fa-earth-asia";
 
 }
 
 
-/* =========================================================
-   STATUS CLASS
-========================================================= */
+/* STATUS CLASS */
 
 function traveloraStatusClass(status) {
 
     if (status === "Cancelled") {
-
         return "status-cancelled";
-
     }
-
 
     if (status === "Completed") {
-
         return "status-completed";
-
     }
-
 
     if (status === "Travel Today") {
-
         return "status-today";
-
     }
-
 
     return "";
 
 }
 
 
-/* =========================================================
-   DESTINATION IMAGE
-========================================================= */
+/* DESTINATION IMAGE */
 
 function traveloraDestinationImage(destination) {
 
-    const name = String(
-        destination || ""
-    ).toLowerCase();
-
+    const name = String(destination || "").toLowerCase();
 
     const images = [
-
         {
             keywords: ["goa"],
-
             url: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["maldives"],
-
             url: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
-            keywords: [
-                "manali",
-                "shimla",
-                "kashmir",
-                "ladakh"
-            ],
-
+            keywords: ["manali", "shimla", "kashmir", "ladakh"],
             url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["paris"],
-
             url: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["dubai"],
-
             url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["bali"],
-
             url: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["singapore"],
-
             url: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["london"],
-
             url: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["new york"],
-
             url: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
-            keywords: [
-                "switzerland",
-                "interlaken",
-                "zermatt"
-            ],
-
+            keywords: ["switzerland", "interlaken", "zermatt"],
             url: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["agra"],
-
             url: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
             keywords: ["jaipur"],
-
             url: "https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
-            keywords: [
-                "kerala",
-                "alleppey",
-                "alappuzha"
-            ],
-
+            keywords: ["kerala", "alleppey", "alappuzha"],
             url: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
-            keywords: [
-                "ooty",
-                "munnar"
-            ],
-
+            keywords: ["ooty", "munnar"],
             url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
-            keywords: [
-                "tokyo",
-                "japan"
-            ],
-
+            keywords: ["tokyo", "japan"],
             url: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1000&q=80"
-
         },
-
         {
-            keywords: ["rome"],
-
-            url: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1000&q=80"
-
-        },
-
-        {
-            keywords: ["venice"],
-
-            url: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?auto=format&fit=crop&w=1000&q=80"
-
-        },
-
-        {
-            keywords: ["istanbul"],
-
-            url: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1000&q=80"
-
-        },
-
-        {
-            keywords: ["sydney"],
-
-            url: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=1000&q=80"
-
-        },
-
-        {
-            keywords: ["thailand", "bangkok"],
-
-            url: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1000&q=80"
-
+            keywords: ["bali"],
+            url: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=80"
         }
-
     ];
 
-
     const match = images.find(item =>
-
-        item.keywords.some(keyword =>
-
-            name.includes(keyword)
-
-        )
-
+        item.keywords.some(keyword => name.includes(keyword))
     );
 
-
     if (match) {
-
         return match.url;
-
     }
-
 
     return "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80";
 
 }
 
 
-/* =========================================================
-   SAFE TEXT FOR HTML
-========================================================= */
+/* SAFE TEXT FOR HTML */
 
 function traveloraEscapeHTML(value) {
 
-    return String(value ?? "").replace(
-        /[&<>"']/g,
-        character => {
+    return String(value ?? "").replace(/[&<>"']/g, character => {
 
-            const entities = {
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        };
 
-                "&": "&amp;",
+        return entities[character];
 
-                "<": "&lt;",
-
-                ">": "&gt;",
-
-                '"': "&quot;",
-
-                "'": "&#39;"
-
-            };
-
-
-            return entities[character];
-
-        }
-    );
+    });
 
 }
 
 
-/* =========================================================
-   BOOKING REFERENCE
-========================================================= */
+/* BOOKING REFERENCE */
 
 function traveloraReference(trip) {
 
-    const id =
-        traveloraGetBookingId(trip);
+    const id = String(trip.id ?? "");
 
-
-    if (!id) {
-
-        return "TR-PENDING";
-
-    }
-
-
-    return id.startsWith("TR-")
-        ? id
-        : "TR-" + id;
+    return id ? "TR-" + id : "TR-" + "PENDING";
 
 }
 
 
-/* =========================================================
-   PAYMENT STATUS
-========================================================= */
-
-function traveloraGetPaymentStatus(trip) {
-
-    return (
-
-        trip.paymentStatus ||
-        trip.payment_status ||
-        trip.payment?.status ||
-        "Pending"
-
-    );
-
-}
-
-
-/* =========================================================
-   SUMMARY
-========================================================= */
+/* SUMMARY */
 
 function traveloraUpdateSummary(trips) {
 
     let upcoming = 0;
-
     let completed = 0;
-
     let totalValue = 0;
-
 
     trips.forEach(trip => {
 
-        const status =
-            traveloraTripStatus(trip);
-
+        const status = traveloraTripStatus(trip);
 
         if (
-
             status === "Confirmed" ||
-
             status === "Travel Today"
-
         ) {
-
             upcoming++;
-
         }
-
 
         if (status === "Completed") {
-
             completed++;
-
         }
-
 
         if (status !== "Cancelled") {
 
-            totalValue +=
-                traveloraGetPrice(trip);
+            const amount = Number(trip.finalPrice);
+
+            if (Number.isFinite(amount)) {
+                totalValue += amount;
+            }
 
         }
 
     });
 
+    document.getElementById("totalTrips").textContent =
+        trips.length;
 
-    document.getElementById(
-        "totalTrips"
-    ).textContent = trips.length;
+    document.getElementById("upcomingTrips").textContent =
+        upcoming;
 
+    document.getElementById("completedTrips").textContent =
+        completed;
 
-    document.getElementById(
-        "upcomingTrips"
-    ).textContent = upcoming;
-
-
-    document.getElementById(
-        "completedTrips"
-    ).textContent = completed;
-
-
-    document.getElementById(
-        "totalSpent"
-    ).textContent = traveloraFormatPrice(
-        totalValue
-    );
+    document.getElementById("totalSpent").textContent =
+        traveloraFormatPrice(totalValue);
 
 }
 
 
-/* =========================================================
-   BUILD A BOOKING CARD
-========================================================= */
+/* BUILD A BOOKING CARD */
 
 function traveloraCreateTripCard(trip) {
 
-    const status =
-        traveloraTripStatus(trip);
-
+    const status = traveloraTripStatus(trip);
 
     const destination =
-        traveloraGetDestination(trip);
-
+        trip.destination || "Your Destination";
 
     const service =
-        traveloraNormaliseService(
-            traveloraGetService(trip)
-        );
-
+        traveloraNormaliseService(trip.service);
 
     const date =
-        traveloraFormatDate(
-            traveloraGetTravelDate(trip)
-        );
-
+        traveloraFormatDate(trip.departureDate);
 
     const travellers =
-        traveloraGetTravellerCount(trip);
-
+        trip.travellers || 1;
 
     const price =
-        traveloraFormatPrice(
-            traveloraGetPrice(trip)
-        );
-
+        traveloraFormatPrice(trip.finalPrice || 0);
 
     const image =
         traveloraDestinationImage(destination);
 
-
-    const id =
-        traveloraGetBookingId(trip);
-
-
-    const paymentStatus =
-        traveloraGetPaymentStatus(trip);
-
+    const id = String(trip.id ?? "");
 
     let actionHTML = "";
-
-
-    /* CANCELLATION BUTTON */
 
     if (traveloraCanCancel(trip)) {
 
         actionHTML = `
-
             <button
-
                 type="button"
-
                 class="trip-btn cancel-btn"
-
                 data-action="cancel"
-
                 data-id="${traveloraEscapeHTML(id)}">
 
                 <i class="fa-solid fa-xmark"></i>
-
                 Cancel Booking
 
             </button>
-
         `;
 
-    }
-
-
-    /* COMPLETED TRIP BUTTON */
-
-    else if (status === "Completed") {
+    } else if (status === "Completed") {
 
         actionHTML = `
-
             <button
-
                 type="button"
-
                 class="trip-btn delete-btn"
-
                 data-action="delete"
-
                 data-id="${traveloraEscapeHTML(id)}">
 
                 <i class="fa-solid fa-trash"></i>
-
                 Delete Trip
 
             </button>
-
         `;
 
-    }
-
-
-    /* CANCELLED BOOKING */
-
-    else if (status === "Cancelled") {
+    } else if (status === "Cancelled") {
 
         actionHTML = `
-
             <span class="trip-btn disabled-btn">
-
                 <i class="fa-solid fa-ban"></i>
-
                 Cancelled
-
             </span>
-
         `;
 
-    }
-
-
-    /* OTHER BOOKINGS */
-
-    else {
+    } else {
 
         actionHTML = `
-
             <span class="trip-btn disabled-btn">
-
                 <i class="fa-solid fa-clock"></i>
-
                 Cancellation Closed
-
             </span>
-
         `;
 
     }
-
-
-    /* NOTICES */
 
     let notice = "";
-
 
     if (status === "Cancelled") {
 
         notice = `
-
             <div class="trip-notice">
-
                 <i class="fa-solid fa-circle-info"></i>
-
                 This booking has been cancelled.
-                Contact Travelora support for cancellation or refund information.
-
             </div>
-
         `;
 
-    }
-
-
-    else if (status === "Completed") {
+    } else if (status === "Completed") {
 
         notice = `
-
             <div class="trip-notice">
-
                 <i class="fa-solid fa-circle-check"></i>
-
-                This trip is completed.
-                You can remove it from your trip history.
-
+                This trip is completed. You can remove it from your trip history.
             </div>
-
         `;
 
-    }
-
-
-    else if (status === "Travel Today") {
+    } else if (status === "Travel Today") {
 
         notice = `
-
             <div class="trip-notice">
-
                 <i class="fa-solid fa-bell"></i>
-
-                Your travel date is today.
-                Please check your service provider's instructions.
-
+                Your travel date is today. Please check your service provider's instructions.
             </div>
-
         `;
 
-    }
-
-
-    else {
+    } else {
 
         notice = `
-
             <div class="trip-notice">
-
                 <i class="fa-solid fa-circle-info"></i>
-
                 Please check your booking confirmation and service details before travelling.
-
             </div>
-
         `;
 
     }
 
-
-    /* CREATE CARD */
-
-    const card =
-        document.createElement("article");
-
+    const card = document.createElement("article");
 
     card.className = "trip-card";
 
-
     card.dataset.status = status;
-
     card.dataset.service = service;
-
-
     card.dataset.search = (
-
-        destination + " " +
-
-        service + " " +
-
-        traveloraReference(trip) + " " +
-
-        id
-
+        destination + " " + service + " " +
+        traveloraReference(trip) + " " + id
     ).toLowerCase();
-
 
     card.innerHTML = `
 
         <div class="trip-image">
 
             <img
-
                 src="${image}"
-
                 alt="${traveloraEscapeHTML(destination)}"
-
                 loading="lazy">
 
-
             <span class="trip-service">
-
                 <i class="fa-solid ${traveloraServiceIcon(service)}"></i>
-
                 ${traveloraEscapeHTML(service)}
-
             </span>
 
-
             <span class="trip-status ${traveloraStatusClass(status)}">
-
                 ${traveloraEscapeHTML(status)}
-
             </span>
 
         </div>
@@ -1657,419 +1558,203 @@ function traveloraCreateTripCard(trip) {
 
         <div class="trip-card-content">
 
-
             <div class="trip-title-row">
 
-
                 <div>
-
-                    <h3>
-
-                        ${traveloraEscapeHTML(destination)}
-
-                    </h3>
-
+                    <h3>${traveloraEscapeHTML(destination)}</h3>
 
                     <div class="trip-subtitle">
-
                         <i class="fa-solid fa-location-dot"></i>
-
                         Your next destination awaits
-
                     </div>
-
                 </div>
-
 
                 <div class="trip-price">
-
                     <small>Booking Amount</small>
-
                     <strong>${price}</strong>
-
                 </div>
 
-
             </div>
-
 
 
             <div class="trip-details">
 
-
                 <div class="trip-detail">
-
                     <i class="fa-regular fa-calendar"></i>
-
                     <div>
-
                         <span>Travel Date</span>
-
-                        <strong>
-
-                            ${traveloraEscapeHTML(date)}
-
-                        </strong>
-
+                        <strong>${traveloraEscapeHTML(date)}</strong>
                     </div>
-
                 </div>
 
 
-
                 <div class="trip-detail">
-
                     <i class="fa-solid fa-users"></i>
-
                     <div>
-
                         <span>Travellers</span>
-
-                        <strong>
-
-                            ${traveloraEscapeHTML(travellers)}
-
-                        </strong>
-
+                        <strong>${traveloraEscapeHTML(travellers)}</strong>
                     </div>
-
                 </div>
 
 
-
                 <div class="trip-detail">
-
                     <i class="fa-solid ${traveloraServiceIcon(service)}"></i>
-
                     <div>
-
                         <span>Service Type</span>
-
-                        <strong>
-
-                            ${traveloraEscapeHTML(service)}
-
-                        </strong>
-
+                        <strong>${traveloraEscapeHTML(service)}</strong>
                     </div>
-
                 </div>
 
 
-
                 <div class="trip-detail">
-
                     <i class="fa-solid fa-ticket"></i>
-
                     <div>
-
                         <span>Booking Reference</span>
-
-                        <strong>
-
-                            ${traveloraEscapeHTML(traveloraReference(trip))}
-
-                        </strong>
-
+                        <strong>${traveloraEscapeHTML(traveloraReference(trip))}</strong>
                     </div>
-
                 </div>
-
-
-                <div class="trip-detail">
-
-                    <i class="fa-solid fa-credit-card"></i>
-
-                    <div>
-
-                        <span>Payment Status</span>
-
-                        <strong>
-
-                            ${traveloraEscapeHTML(paymentStatus)}
-
-                        </strong>
-
-                    </div>
-
-                </div>
-
 
             </div>
-
 
 
             <div class="trip-card-footer">
 
-
                 <span class="trip-reference">
-
                     <i class="fa-solid fa-shield-halved"></i>
-
                     Booking status: ${traveloraEscapeHTML(status)}
-
                 </span>
 
-
                 <div class="trip-actions">
-
                     ${actionHTML}
-
                 </div>
-
 
             </div>
 
-
             ${notice}
-
 
         </div>
 
     `;
 
+    const img = card.querySelector("img");
 
-    /* IMAGE FALLBACK */
+    img.addEventListener("error", function () {
 
-    const img =
-        card.querySelector("img");
+        this.onerror = null;
 
+        this.src =
+            "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80";
 
-    img.addEventListener(
-        "error",
-        function() {
-
-            this.onerror = null;
-
-            this.src =
-                "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80";
-
-        }
-    );
-
+    });
 
     return card;
 
 }
 
 
-/* =========================================================
-   EMPTY STATE
-========================================================= */
+/* EMPTY STATE */
 
 function traveloraShowEmpty(message, showBookButton) {
 
     const container =
         document.getElementById("tripItems");
 
-
     container.innerHTML = "";
 
-
-    const empty =
-        document.createElement("div");
-
+    const empty = document.createElement("div");
 
     empty.className = "empty-state";
-
 
     empty.innerHTML = `
 
         <div class="empty-icon">
-
             <i class="fa-solid fa-suitcase-rolling"></i>
-
         </div>
 
-
-        <h3>
-
-            ${traveloraEscapeHTML(message)}
-
-        </h3>
-
+        <h3>${traveloraEscapeHTML(message)}</h3>
 
         <p>
-
             ${
-
                 showBookButton
-
                 ? "Your travel story starts here. Explore destinations and book your next adventure with Travelora."
-
                 : "Try changing your search or filter to find your bookings."
-
             }
-
         </p>
 
-
         ${
-
             showBookButton
-
             ? `
-
                 <a href="destinations.html" class="book-new-btn">
-
                     <i class="fa-solid fa-compass"></i>
-
                     Explore Destinations
-
                 </a>
-
             `
-
             : ""
-
         }
 
     `;
-
 
     container.appendChild(empty);
 
 }
 
 
-/* =========================================================
-   LOAD AND FILTER BOOKINGS
-========================================================= */
+/* LOAD AND FILTER BOOKINGS */
 
 function traveloraLoadTrips() {
 
     const container =
         document.getElementById("tripItems");
 
+    if (!container) return;
 
-    if (!container) {
-
-        return;
-
-    }
-
-
-    /* CHECK USER SESSION */
-
-    if (
-        localStorage.getItem("isLoggedIn") !== "true"
-    ) {
-
-        return;
-
-    }
-
-
-    /* GET ONLY CURRENT USER'S BOOKINGS */
-
-    const trips =
-        traveloraGetCurrentUsersTrips();
-
-
-    /* UPDATE SUMMARY */
+    const trips = traveloraGetTrips();
 
     traveloraUpdateSummary(trips);
 
+    const search =
+        document.getElementById("tripSearch")
+            .value.trim().toLowerCase();
 
-    /* GET SEARCH VALUE */
+    const statusFilter =
+        document.getElementById("tripStatusFilter").value;
 
-    const searchInput =
-        document.getElementById("tripSearch");
+    const serviceFilter =
+        document.getElementById("tripServiceFilter").value;
 
+    const matchingTrips = trips.filter(trip => {
 
-    const statusInput =
-        document.getElementById("tripStatusFilter");
+        const status = traveloraTripStatus(trip);
 
+        const service = traveloraNormaliseService(trip.service);
 
-    const serviceInput =
-        document.getElementById("tripServiceFilter");
+        const searchText = (
+            String(trip.destination || "") + " " +
+            service + " " +
+            traveloraReference(trip) + " " +
+            String(trip.id ?? "")
+        ).toLowerCase();
 
+        const matchesSearch =
+            searchText.includes(search);
 
-    const search = searchInput
-        ? searchInput.value.trim().toLowerCase()
-        : "";
+        const matchesStatus =
+            statusFilter === "All" ||
+            status === statusFilter;
 
+        const matchesService =
+            serviceFilter === "All" ||
+            service === serviceFilter;
 
-    const statusFilter = statusInput
-        ? statusInput.value
-        : "All";
+        return (
+            matchesSearch &&
+            matchesStatus &&
+            matchesService
+        );
 
-
-    const serviceFilter = serviceInput
-        ? serviceInput.value
-        : "All";
-
-
-    /* FILTER TRIPS */
-
-    const matchingTrips =
-        trips.filter(trip => {
-
-
-            const status =
-                traveloraTripStatus(trip);
-
-
-            const service =
-                traveloraNormaliseService(
-                    traveloraGetService(trip)
-                );
-
-
-            const destination =
-                traveloraGetDestination(trip);
-
-
-            const searchText = (
-
-                String(destination) + " " +
-
-                service + " " +
-
-                traveloraReference(trip) + " " +
-
-                traveloraGetBookingId(trip)
-
-            ).toLowerCase();
-
-
-            const matchesSearch =
-                searchText.includes(search);
-
-
-            const matchesStatus =
-
-                statusFilter === "All" ||
-
-                status === statusFilter;
-
-
-            const matchesService =
-
-                serviceFilter === "All" ||
-
-                service === serviceFilter;
-
-
-            return (
-
-                matchesSearch &&
-
-                matchesStatus &&
-
-                matchesService
-
-            );
-
-        });
-
-
-    /* CLEAR OLD CARDS */
+    });
 
     container.innerHTML = "";
-
-
-    /* NO BOOKINGS */
 
     if (trips.length === 0) {
 
@@ -2082,9 +1767,6 @@ function traveloraLoadTrips() {
 
     }
 
-
-    /* NO FILTER MATCH */
-
     if (matchingTrips.length === 0) {
 
         traveloraShowEmpty(
@@ -2096,15 +1778,10 @@ function traveloraLoadTrips() {
 
     }
 
-
-    /* DISPLAY CARDS */
-
     matchingTrips.forEach(trip => {
 
         container.appendChild(
-
             traveloraCreateTripCard(trip)
-
         );
 
     });
@@ -2112,138 +1789,15 @@ function traveloraLoadTrips() {
 }
 
 
-/* =========================================================
-   UPDATE BOTH TRIP AND MASTER BOOKING RECORDS
-
-   This keeps the admin dashboard booking status updated.
-========================================================= */
-
-function traveloraUpdateBookingStatus(id, newStatus) {
-
-    const trips =
-        traveloraGetTrips();
-
-
-    const bookings =
-        traveloraGetMasterBookings();
-
-
-    let tripUpdated = false;
-
-    let bookingUpdated = false;
-
-
-    /* UPDATE TRIPS */
-
-    trips.forEach(trip => {
-
-        if (
-            traveloraGetBookingId(trip) === String(id)
-        ) {
-
-            trip.status = newStatus;
-
-            trip.updatedAt =
-                new Date().toISOString();
-
-
-            if (newStatus === "Cancelled") {
-
-                trip.cancelledAt =
-                    new Date().toISOString();
-
-            }
-
-
-            tripUpdated = true;
-
-        }
-
-    });
-
-
-    /* UPDATE MASTER BOOKINGS */
-
-    bookings.forEach(booking => {
-
-        if (
-            traveloraGetBookingId(booking) === String(id)
-        ) {
-
-            booking.status = newStatus;
-
-            booking.updatedAt =
-                new Date().toISOString();
-
-
-            if (newStatus === "Cancelled") {
-
-                booking.cancelledAt =
-                    new Date().toISOString();
-
-            }
-
-
-            bookingUpdated = true;
-
-        }
-
-    });
-
-
-    try {
-
-        if (tripUpdated) {
-
-            traveloraSaveTrips(trips);
-
-        }
-
-
-        if (bookingUpdated) {
-
-            traveloraSaveMasterBookings(bookings);
-
-        }
-
-
-        return (
-            tripUpdated ||
-            bookingUpdated
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Unable to update booking:",
-            error
-        );
-
-        return false;
-
-    }
-
-}
-
-
-/* =========================================================
-   CANCEL BOOKING
-========================================================= */
+/* CANCEL BOOKING */
 
 function traveloraCancelTrip(id) {
 
-    const trips =
-        traveloraGetCurrentUsersTrips();
+    const trips = traveloraGetTrips();
 
-
-    const trip = trips.find(item => {
-
-        return (
-            traveloraGetBookingId(item) === String(id)
-        );
-
-    });
-
+    const trip = trips.find(
+        item => String(item.id) === String(id)
+    );
 
     if (!trip) {
 
@@ -2252,31 +1806,6 @@ function traveloraCancelTrip(id) {
         return;
 
     }
-
-
-    /* VERIFY OWNERSHIP AGAIN */
-
-    const bookings =
-        traveloraGetMasterBookings();
-
-
-    if (
-        !traveloraBelongsToCurrentUser(
-            trip,
-            bookings
-        )
-    ) {
-
-        alert(
-            "You are not authorised to cancel this booking."
-        );
-
-        return;
-
-    }
-
-
-    /* CHECK CANCELLATION RULE */
 
     if (!traveloraCanCancel(trip)) {
 
@@ -2288,85 +1817,45 @@ function traveloraCancelTrip(id) {
 
     }
 
-
-    /* CONFIRMATION */
-
     const confirmed = confirm(
-
         "Are you sure you want to cancel your booking for " +
-
-        traveloraGetDestination(trip) +
-
+        (trip.destination || "this destination") +
         "?"
-
     );
 
+    if (!confirmed) return;
 
-    if (!confirmed) {
+    trip.status = "Cancelled";
+    trip.cancelledAt = new Date().toISOString();
 
-        return;
+    try {
 
-    }
+        traveloraSaveTrips(trips);
 
+        traveloraLoadTrips();
 
-    /* UPDATE BOTH ARRAYS */
+        alert("Your trip has been cancelled.");
 
-    const updated =
-        traveloraUpdateBookingStatus(
-            id,
-            "Cancelled"
-        );
-
-
-    if (!updated) {
+    } catch (error) {
 
         alert(
-            "Unable to update this booking. Please try again."
+            "Unable to save the cancellation. Please try again."
         );
 
-        return;
-
     }
-
-
-    /* REFRESH PAGE DATA */
-
-    traveloraLoadTrips();
-
-
-    alert(
-        "Your booking has been cancelled successfully."
-    );
 
 }
 
 
-/* =========================================================
-   DELETE COMPLETED TRIP
-
-   This removes the trip from the user's trip history.
-   It does NOT delete the original master booking.
-   Admin booking history remains available.
-========================================================= */
+/* DELETE COMPLETED BOOKING */
 
 function traveloraDeleteCompletedTrip(id) {
 
-    const trips =
-        traveloraGetTrips();
+    const trips = traveloraGetTrips();
 
-
-    const bookings =
-        traveloraGetMasterBookings();
-
-
-    const trip = trips.find(item => {
-
-        return (
-            traveloraGetBookingId(item) === String(id)
-        );
-
-    });
-
+    const trip = trips.find(
+        item => String(item.id) === String(id)
+    );
 
     if (!trip) {
 
@@ -2376,87 +1865,33 @@ function traveloraDeleteCompletedTrip(id) {
 
     }
 
+    if (traveloraTripStatus(trip) !== "Completed") {
 
-    /* VERIFY OWNERSHIP */
-
-    if (
-        !traveloraBelongsToCurrentUser(
-            trip,
-            bookings
-        )
-    ) {
-
-        alert(
-            "You are not authorised to delete this trip."
-        );
+        alert("Only completed trips can be deleted.");
 
         return;
 
     }
-
-
-    /* ONLY COMPLETED TRIPS CAN BE DELETED */
-
-    if (
-        traveloraTripStatus(trip) !== "Completed"
-    ) {
-
-        alert(
-            "Only completed trips can be deleted."
-        );
-
-        return;
-
-    }
-
-
-    /* CONFIRM DELETION */
 
     const confirmed = confirm(
-
         "Delete this completed trip from your trip history?"
-
     );
 
+    if (!confirmed) return;
 
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    /* REMOVE ONLY FROM TRIP HISTORY */
-
-    const remaining = trips.filter(item => {
-
-        return (
-            traveloraGetBookingId(item) !== String(id)
-        );
-
-    });
-
+    const remaining = trips.filter(
+        item => String(item.id) !== String(id)
+    );
 
     try {
 
         traveloraSaveTrips(remaining);
 
-
         traveloraLoadTrips();
 
-
-        alert(
-            "Completed trip deleted from your trip history."
-        );
-
+        alert("Completed trip deleted successfully.");
 
     } catch (error) {
-
-        console.error(
-            "Unable to delete completed trip:",
-            error
-        );
-
 
         alert(
             "Unable to delete this trip. Please try again."
@@ -2467,193 +1902,56 @@ function traveloraDeleteCompletedTrip(id) {
 }
 
 
-/* =========================================================
-   HANDLE CARD BUTTONS
-========================================================= */
+/* HANDLE CARD BUTTONS */
 
-const traveloraTripContainer =
-    document.getElementById("tripItems");
+document.getElementById("tripItems")
+    .addEventListener("click", function(event) {
 
+        const button = event.target.closest("button[data-action]");
 
-if (traveloraTripContainer) {
+        if (!button) return;
 
-    traveloraTripContainer.addEventListener(
-        "click",
-        function(event) {
+        const action = button.dataset.action;
+        const id = button.dataset.id;
 
+        if (action === "cancel") {
 
-            const button =
-                event.target.closest(
-                    "button[data-action]"
-                );
+            traveloraCancelTrip(id);
 
+        } else if (action === "delete") {
 
-            if (!button) {
-
-                return;
-
-            }
-
-
-            const action =
-                button.dataset.action;
-
-
-            const id =
-                button.dataset.id;
-
-
-            if (action === "cancel") {
-
-                traveloraCancelTrip(id);
-
-            }
-
-
-            else if (action === "delete") {
-
-                traveloraDeleteCompletedTrip(id);
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   SEARCH EVENT
-========================================================= */
-
-const traveloraSearchInput =
-    document.getElementById("tripSearch");
-
-
-if (traveloraSearchInput) {
-
-    traveloraSearchInput.addEventListener(
-        "input",
-        traveloraLoadTrips
-    );
-
-}
-
-
-/* =========================================================
-   STATUS FILTER EVENT
-========================================================= */
-
-const traveloraStatusFilter =
-    document.getElementById("tripStatusFilter");
-
-
-if (traveloraStatusFilter) {
-
-    traveloraStatusFilter.addEventListener(
-        "change",
-        traveloraLoadTrips
-    );
-
-}
-
-
-/* =========================================================
-   SERVICE FILTER EVENT
-========================================================= */
-
-const traveloraServiceFilter =
-    document.getElementById("tripServiceFilter");
-
-
-if (traveloraServiceFilter) {
-
-    traveloraServiceFilter.addEventListener(
-        "change",
-        traveloraLoadTrips
-    );
-
-}
-
-
-/* =========================================================
-   REFRESH WHEN LOCAL STORAGE CHANGES
-
-   This event works when another tab updates localStorage.
-========================================================= */
-
-window.addEventListener(
-    "storage",
-    function(event) {
-
-        if (
-
-            event.key === TRAVELORA_MY_TRIPS_KEY ||
-
-            event.key === TRAVELORA_MY_BOOKINGS_KEY ||
-
-            event.key === null
-
-        ) {
-
-            traveloraLoadTrips();
+            traveloraDeleteCompletedTrip(id);
 
         }
 
-    }
+    });
+
+
+/* SEARCH AND FILTER EVENTS */
+
+document.getElementById("tripSearch")
+    .addEventListener("input", traveloraLoadTrips);
+
+document.getElementById("tripStatusFilter")
+    .addEventListener("change", traveloraLoadTrips);
+
+document.getElementById("tripServiceFilter")
+    .addEventListener("change", traveloraLoadTrips);
+
+
+/* INITIALISE PAGE */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    traveloraLoadTrips
 );
 
-
-/* =========================================================
-   REFRESH WHEN TRAVELORA SCRIPT UPDATES DATA
-========================================================= */
-
-window.addEventListener(
-    "traveloraDataUpdated",
-    function() {
-
-        traveloraLoadTrips();
-
-    }
-);
-
-
-/* =========================================================
-   INITIALISE PAGE
-========================================================= */
-
-function traveloraInitialiseTripsPage() {
-
-    if (!traveloraCheckTripsLogin()) {
-
-        return;
-
-    }
-
-
+/* Also render if this script runs after DOMContentLoaded. */
+if (document.readyState !== "loading") {
     traveloraLoadTrips();
-
 }
-
-
-/* RUN AFTER HTML LOADS */
-
-if (document.readyState === "loading") {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        traveloraInitialiseTripsPage
-    );
-
-} else {
-
-    traveloraInitialiseTripsPage();
-
-}
-
-
-/* =========================================================
-   END OF TRAVELORA MY TRIPS JAVASCRIPT
-========================================================= */
 
 </script>
+
+</body>
+</html>
