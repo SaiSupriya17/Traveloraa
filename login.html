@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | Travelora</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #073b5c, #0e918c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 440px;
+    background: white;
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.2);
+}
+
+.logo {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #073b5c;
+    margin-bottom: 8px;
+}
+
+.logo span {
+    color: #ff7200;
+}
+
+.tagline {
+    text-align: center;
+    color: #667085;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.tabs {
+    display: flex;
+    background: #eef3f7;
+    border-radius: 9px;
+    padding: 5px;
+    margin-bottom: 23px;
+}
+
+.tabs button {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 7px;
+    background: transparent;
+    color: #073b5c;
+    font-weight: bold;
+}
+
+.tabs button.active {
+    background: #073b5c;
+    color: white;
+}
+
+.form-section {
+    display: none;
+}
+
+.form-section.active {
+    display: block;
+}
+
+h2 {
+    color: #073b5c;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: #344054;
+    margin: 13px 0 7px;
+    font-size: 14px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd5df;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+}
+
+input:focus, select:focus {
+    border-color: #0e918c;
+    box-shadow: 0 0 0 2px rgba(14,145,140,.12);
+}
+
+.password-wrap {
+    position: relative;
+}
+
+.password-wrap input {
+    padding-right: 65px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #0e918c;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.main-button {
+    width: 100%;
+    padding: 13px;
+    background: #ff7200;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 22px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.main-button:hover {
+    background: #e96500;
+}
+
+.message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    min-height: 18px;
+    line-height: 1.5;
+}
+
+.error {
+    color: #dc3545;
+}
+
+.success {
+    color: #16834a;
+}
+
+.back-home {
+    display: block;
+    text-align: center;
+    margin-top: 22px;
+    color: #073b5c;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-home:hover {
+    color: #ff7200;
+}
+
+@media(max-width:480px) {
+
+    .login-container {
+        padding: 25px 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">
+        Travelora <span>✈</span>
+    </div>
+
+    <p class="tagline">
+        One Platform. Every Journey.
+    </p>
+
+
+    <!-- LOGIN / SIGNUP TABS -->
+
+    <div class="tabs">
+
+        <button
+            type="button"
+            id="loginTab"
+            class="active"
+            onclick="showForm('login')">
+
+            Login
+
+        </button>
+
+        <button
+            type="button"
+            id="signupTab"
+            onclick="showForm('signup')">
+
+            Sign Up
+
+        </button>
+
+    </div>
+
+
+    <!-- LOGIN FORM -->
+
+    <section id="loginForm" class="form-section active">
+
+        <h2>Welcome Back!</h2>
+
+        <form onsubmit="loginUser(event)">
+
+            <label for="loginRole">
+                Account Type
+            </label>
+
+            <select id="loginRole" required>
+
+                <option value="user">User</option>
+
+                <option value="admin">Admin</option>
+
+            </select>
+
+
+            <label for="loginIdentity">
+                Email or Phone Number
+            </label>
+
+            <input
+                type="text"
+                id="loginIdentity"
+                placeholder="Enter your email or phone"
+                autocomplete="username"
+                required
+            >
+
+
+            <label for="loginPassword">
+                Password
+            </label>
+
+            <div class="password-wrap">
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    onclick="togglePassword('loginPassword',this)">
+
+                    Show
+
+                </button>
+
+            </div>
+
+
+            <button type="submit" class="main-button">
+                Login
+            </button>
+
+        </form>
+
+        <p id="loginMessage" class="message"></p>
+
+    </section>
+
+
+    <!-- SIGNUP FORM -->
+
+    <section id="signupForm" class="form-section">
+
+        <h2>Create Your Account</h2>
+
+        <form onsubmit="registerUser(event)">
+
+            <label for="signupRole">
+                Account Type
+            </label>
+
+            <select id="signupRole" required>
+
+                <option value="user">User</option>
+
+                <option value="admin">Admin</option>
+
+            </select>
+
+
+            <label for="signupName">
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                id="signupName"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                maxlength="80"
+                required
+            >
+
+
+            <label for="signupEmail">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="signupEmail"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+            >
+
+
+            <label for="signupContact">
+                Phone Number
+            </label>
+
+            <input
+                type="tel"
+                id="signupContact"
+                placeholder="Enter your phone number"
+                autocomplete="tel"
+                required
+            >
+
+
+            <label for="signupGender">
+                Gender
+            </label>
+
+            <select id="signupGender" required>
+
+                <option value="">Select Gender</option>
+
+                <option value="Female">Female</option>
+
+                <option value="Male">Male</option>
+
+                <option value="Other">Other</option>
+
+                <option value="Prefer not to say">
+                    Prefer not to say
+                </option>
+
+            </select>
+
+
+            <label for="signupPassword">
+                Create Password
+            </label>
+
+            <div class="password-wrap">
+
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create a password"
+                    minlength="6"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    onclick="togglePassword('signupPassword',this)">
+
+                    Show
+
+                </button>
+
+            </div>
+
+
+            <label for="confirmPassword">
+                Confirm Password
+            </label>
+
+            <div class="password-wrap">
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm your password"
+                    minlength="6"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    onclick="togglePassword('confirmPassword',this)">
+
+                    Show
+
+                </button>
+
+            </div>
+
+
+            <button type="submit" class="main-button">
+                Create Account
+            </button>
+
+        </form>
+
+        <p id="signupMessage" class="message"></p>
+
+    </section>
+
+
+    <a href="index.html" class="back-home">
+        ← Back to Home
+    </a>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   TRAVELORA AUTHENTICATION
+========================================== */
+
+
+/* STORAGE KEY */
+
+const USERS_KEY = "traveloraUsers";
+
+
+/* ==========================================
+   SWITCH FORMS
+========================================== */
+
+function showForm(formName) {
+
+    document.getElementById("loginForm")
+        .classList.remove("active");
+
+    document.getElementById("signupForm")
+        .classList.remove("active");
+
+    document.getElementById("loginTab")
+        .classList.remove("active");
+
+    document.getElementById("signupTab")
+        .classList.remove("active");
+
+
+    if (formName === "login") {
+
+        document.getElementById("loginForm")
+            .classList.add("active");
+
+        document.getElementById("loginTab")
+            .classList.add("active");
+
+    } else {
+
+        document.getElementById("signupForm")
+            .classList.add("active");
+
+        document.getElementById("signupTab")
+            .classList.add("active");
+
+    }
+
+}
+
+
+/* ==========================================
+   SHOW / HIDE PASSWORD
+========================================== */
+
+function togglePassword(inputId, button) {
+
+    const input = document.getElementById(inputId);
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        button.innerText = "Hide";
+
+    } else {
+
+        input.type = "password";
+
+        button.innerText = "Show";
+
+    }
+
+}
+
+
+/* ==========================================
+   GET USERS
+========================================== */
+
+function getUsers() {
+
+    try {
+
+        const users = JSON.parse(
+            localStorage.getItem(USERS_KEY) || "[]"
+        );
+
+        return Array.isArray(users) ? users : [];
+
+    } catch (error) {
+
+        console.error("Unable to read users:", error);
+
+        return [];
+
+    }
+
+}
+
+
+/* ==========================================
+   SAVE USERS
+========================================== */
+
+function saveUsers(users) {
+
+    try {
+
+        localStorage.setItem(
+            USERS_KEY,
+            JSON.stringify(users)
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error("Unable to save users:", error);
+
+        return false;
+
+    }
+
+}
+
+
+/* ==========================================
+   NORMALIZE PHONE
+========================================== */
+
+function normalizePhone(phone) {
+
+    return String(phone || "")
+        .replace(/[\s-]/g, "");
+
+}
+
+
+/* ==========================================
+   CHECK DUPLICATE ACCOUNT
+========================================== */
+
+function isDuplicateUser(email, phone) {
+
+    const users = getUsers();
+
+    const normalizedEmail = email.toLowerCase();
+
+    const normalizedPhone = normalizePhone(phone);
+
+    return users.some(function(user) {
+
+        const savedEmail = String(user.email || "")
+            .trim()
+            .toLowerCase();
+
+        const savedPhone = normalizePhone(user.phone);
+
+        const savedContact = String(user.contact || "")
+            .trim()
+            .toLowerCase();
+
+        return (
+            savedEmail === normalizedEmail ||
+            savedPhone === normalizedPhone ||
+            savedContact === normalizedEmail ||
+            normalizePhone(savedContact) === normalizedPhone
+        );
+
+    });
+
+}
+
+
+/* ==========================================
+   REGISTER USER
+========================================== */
+
+function registerUser(event) {
+
+    event.preventDefault();
+
+    const message = document.getElementById("signupMessage");
+
+    message.className = "message";
+
+    message.innerText = "";
+
+
+    const role = document.getElementById("signupRole").value;
+
+    /* Admin registration is not permitted */
+
+    if (role === "admin") {
+
+        message.innerText =
+            "Admin accounts cannot be created through Sign Up.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    const name = document.getElementById("signupName")
+        .value.trim();
+
+    const email = document.getElementById("signupEmail")
+        .value.trim().toLowerCase();
+
+    const phone = document.getElementById("signupContact")
+        .value.trim();
+
+    const gender = document.getElementById("signupGender")
+        .value;
+
+    const password = document.getElementById("signupPassword")
+        .value;
+
+    const confirmPassword = document.getElementById("confirmPassword")
+        .value;
+
+
+    /* Validate fields */
+
+    if (
+        !name ||
+        !email ||
+        !phone ||
+        !gender ||
+        !password ||
+        !confirmPassword
+    ) {
+
+        message.innerText = "Please fill in all fields.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    if (name.length < 2) {
+
+        message.innerText =
+            "Please enter a valid full name.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+        message.innerText =
+            "Please enter a valid email address.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    if (!/^\+?[0-9]{10,15}$/.test(normalizePhone(phone))) {
+
+        message.innerText =
+            "Please enter a valid phone number.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    if (password.length < 6) {
+
+        message.innerText =
+            "Password must contain at least 6 characters.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    if (password !== confirmPassword) {
+
+        message.innerText =
+            "Passwords do not match.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    /* Check duplicates */
+
+    if (isDuplicateUser(email, phone)) {
+
+        message.innerText =
+            "An account with this email or phone already exists.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    const users = getUsers();
+
+
+    /* Create unique user ID */
+
+    const userId =
+        "USR-" +
+        Date.now() +
+        "-" +
+        Math.random().toString(36).slice(2, 7).toUpperCase();
+
+
+    /* Create user record */
+
+    const newUser = {
+
+        id: userId,
+
+        userId: userId,
+
+        name: name,
+
+        email: email,
+
+        phone: normalizePhone(phone),
+
+        contact: email,
+
+        gender: gender,
+
+        password: password,
+
+        role: "user",
+
+        createdAt: new Date().toISOString(),
+
+        registeredOn: new Date().toISOString(),
+
+        status: "Active",
+
+        totalBookings: 0,
+
+        totalSpent: 0
+
+    };
+
+
+    /* Save to Admin Dashboard user list */
+
+    users.unshift(newUser);
+
+    const saved = saveUsers(users);
+
+    if (!saved) {
+
+        message.innerText =
+            "Unable to create account. Please try again.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    /* Clear registration form */
+
+    document.getElementById("signupName").value = "";
+
+    document.getElementById("signupEmail").value = "";
+
+    document.getElementById("signupContact").value = "";
+
+    document.getElementById("signupGender").value = "";
+
+    document.getElementById("signupPassword").value = "";
+
+    document.getElementById("confirmPassword").value = "";
+
+
+    message.innerText =
+        "Account created successfully! Please login.";
+
+    message.classList.add("success");
+
+
+    /* Switch to login */
+
+    setTimeout(function() {
+
+        showForm("login");
+
+        document.getElementById("loginRole").value = "user";
+
+        document.getElementById("loginIdentity").value = email;
+
+        document.getElementById("loginPassword").focus();
+
+    }, 1000);
+
+}
+
+
+/* ==========================================
+   CREATE USER SESSION
+========================================== */
+
+function createSession(user, role) {
+
+    /* Clear old session data */
+
+    localStorage.removeItem("userId");
+
+    localStorage.removeItem("userName");
+
+    localStorage.removeItem("userEmail");
+
+    localStorage.removeItem("userPhone");
+
+    localStorage.removeItem("userGender");
+
+
+    /* Set new session */
+
+    localStorage.setItem("isLoggedIn", "true");
+
+    localStorage.setItem("userRole", role);
+
+    localStorage.setItem(
+        "userId",
+        user.id || user.userId || ""
+    );
+
+    localStorage.setItem(
+        "userName",
+        user.name || "Travelora Admin"
+    );
+
+    localStorage.setItem(
+        "userEmail",
+        user.email || ""
+    );
+
+    localStorage.setItem(
+        "userPhone",
+        user.phone || ""
+    );
+
+    localStorage.setItem(
+        "userGender",
+        user.gender || ""
+    );
+
+
+    /* Redirect according to role */
+
+    if (role === "admin") {
+
+        window.location.replace("admin-dashboard.html");
+
+    } else {
+
+        window.location.replace("index.html");
+
+    }
+
+}
+
+
+/* ==========================================
+   ADMIN LOGIN
+========================================== */
+
+function loginAdmin(identity, password, message) {
+
+    const adminEmail = "admin@travelora.com";
+
+    const adminPassword = "Admin@123";
+
+
+    if (
+        identity !== adminEmail ||
+        password !== adminPassword
+    ) {
+
+        message.innerText =
+            "Invalid administrator email or password.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    const admin = {
+
+        id: "TRAVELORA-ADMIN",
+
+        userId: "TRAVELORA-ADMIN",
+
+        name: "Travelora Admin",
+
+        email: adminEmail,
+
+        phone: "",
+
+        gender: "Not specified",
+
+        role: "admin"
+
+    };
+
+
+    createSession(admin, "admin");
+
+}
+
+
+/* ==========================================
+   USER LOGIN
+========================================== */
+
+function loginNormalUser(identity, password, message) {
+
+    const users = getUsers();
+
+    const normalizedIdentity = identity.trim().toLowerCase();
+
+
+    const user = users.find(function(item) {
+
+        const email = String(item.email || "")
+            .trim()
+            .toLowerCase();
+
+        const phone = normalizePhone(item.phone);
+
+        const contact = String(item.contact || "")
+            .trim()
+            .toLowerCase();
+
+        const normalizedPhoneIdentity =
+            normalizePhone(identity);
+
+        const identityMatches = (
+            email === normalizedIdentity ||
+            phone === normalizedPhoneIdentity ||
+            contact === normalizedIdentity ||
+            normalizePhone(contact) === normalizedPhoneIdentity
+        );
+
+        return (
+            identityMatches &&
+            item.password === password &&
+            String(item.role || "user").toLowerCase() === "user"
+        );
+
+    });
+
+
+    if (!user) {
+
+        message.innerText =
+            "Invalid user email/phone or password.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    if (
+        String(user.status || "Active").toLowerCase() === "blocked" ||
+        String(user.status || "Active").toLowerCase() === "inactive"
+    ) {
+
+        message.innerText =
+            "Your account is inactive. Please contact the administrator.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    createSession(user, "user");
+
+}
+
+
+/* ==========================================
+   MAIN LOGIN FUNCTION
+========================================== */
+
+function loginUser(event) {
+
+    event.preventDefault();
+
+    const role = document.getElementById("loginRole").value;
+
+    const identity = document.getElementById("loginIdentity")
+        .value.trim();
+
+    const password = document.getElementById("loginPassword")
+        .value;
+
+    const message = document.getElementById("loginMessage");
+
+
+    message.className = "message";
+
+    message.innerText = "";
+
+
+    if (!identity || !password) {
+
+        message.innerText =
+            "Please enter your login details.";
+
+        message.classList.add("error");
+
+        return;
+
+    }
+
+
+    if (role === "admin") {
+
+        loginAdmin(
+            identity.toLowerCase(),
+            password,
+            message
+        );
+
+    } else {
+
+        loginNormalUser(
+            identity,
+            password,
+            message
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

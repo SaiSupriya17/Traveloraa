@@ -1,0 +1,1439 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travelora | Hotel Booking</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f5f8fc;
+    color: #172b4d;
+}
+
+.navbar {
+    background: white;
+    padding: 17px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 12px #00000010;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    color: #087d9b;
+}
+
+.nav-links {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #263b59;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #087d9b;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 25px;
+}
+
+.hero {
+    min-height: 260px;
+    border-radius: 18px;
+    padding: 55px 40px;
+    display: flex;
+    align-items: center;
+    color: white;
+    background:
+    linear-gradient(90deg, #071d38df, #071d3840),
+    url("https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600")
+    center/cover;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    font-size: 15px;
+}
+
+.search-box {
+    background: white;
+    padding: 22px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 15px;
+    border-radius: 14px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 18px #0000000b;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.field input,
+.field select,
+.booking-form input,
+.booking-form select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #dce5ef;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    background: white;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: #087d9b;
+}
+
+.btn {
+    border: none;
+    background: #087d9b;
+    color: white;
+    padding: 13px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn:hover {
+    background: #075c78;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.section-heading h2 {
+    font-size: 25px;
+}
+
+.hotel-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.hotel-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px #0000000c;
+    transition: .3s;
+}
+
+.hotel-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px #00000018;
+}
+
+.hotel-card img {
+    width: 100%;
+    height: 195px;
+    object-fit: cover;
+}
+
+.hotel-info {
+    padding: 17px;
+}
+
+.hotel-info h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.location {
+    color: #718096;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.rating {
+    color: #f2a900;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.hotel-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.hotel-price {
+    color: #087d9b;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.hotel-price small {
+    display: block;
+    font-size: 11px;
+    color: #718096;
+    font-weight: 400;
+}
+
+.hotel-bottom button {
+    font-size: 12px;
+    padding: 10px 12px;
+}
+
+/* DETAILS PAGE */
+
+#detailsPage,
+#bookingPage {
+    display: none;
+}
+
+.back-btn {
+    background: #e6f2f7;
+    color: #087d9b;
+    margin-bottom: 20px;
+}
+
+.details-header {
+    margin-bottom: 20px;
+}
+
+.details-header h2 {
+    font-size: 28px;
+}
+
+.details-header p {
+    color: #718096;
+    margin-top: 5px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.gallery-main {
+    position: relative;
+}
+
+.gallery-main img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 13px;
+}
+
+.gallery-side {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+}
+
+.gallery-side img {
+    width: 100%;
+    height: 204px;
+    object-fit: cover;
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.gallery-main button {
+    position: absolute;
+    top: 45%;
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    background: #ffffffdf;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.gallery-main .prev {
+    left: 15px;
+}
+
+.gallery-main .next {
+    right: 15px;
+}
+
+.thumbnail-row {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    margin: 15px 0 25px;
+}
+
+.thumbnail-row img {
+    width: 110px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 3px solid transparent;
+}
+
+.thumbnail-row img.active {
+    border-color: #087d9b;
+}
+
+.details-content {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 25px;
+}
+
+.details-box,
+.price-box {
+    background: white;
+    padding: 25px;
+    border-radius: 13px;
+    box-shadow: 0 3px 15px #0000000b;
+}
+
+.details-box h3 {
+    margin-bottom: 12px;
+}
+
+.details-box p {
+    color: #66758a;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.amenities {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.amenity {
+    background: #edf6fa;
+    padding: 15px 8px;
+    border-radius: 9px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.amenity i {
+    display: block;
+    color: #087d9b;
+    font-size: 20px;
+    margin-bottom: 7px;
+}
+
+.price-box h3 {
+    margin-bottom: 15px;
+}
+
+.price-box .big-price {
+    color: #087d9b;
+    font-size: 27px;
+    font-weight: 700;
+    margin: 15px 0;
+}
+
+.price-box p {
+    color: #718096;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.price-box button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* BOOKING FORM */
+
+.booking-container {
+    background: white;
+    padding: 28px;
+    border-radius: 15px;
+    box-shadow: 0 4px 18px #0000000b;
+}
+
+.selected-hotel {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #edf7fb;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.selected-hotel img {
+    width: 115px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.selected-hotel h3 {
+    margin-bottom: 5px;
+}
+
+.booking-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.booking-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.booking-form .full {
+    grid-column: 1/-1;
+}
+
+.booking-form button {
+    grid-column: 1/-1;
+}
+
+.total-box {
+    background: #edf7fb;
+    padding: 18px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-weight: 700;
+    color: #087d9b;
+}
+
+.confirmation {
+    display: none;
+    padding: 25px;
+    background: #e8f8ef;
+    color: #176b46;
+    border-radius: 12px;
+    margin-top: 20px;
+    line-height: 2;
+}
+
+footer {
+    margin-top: 50px;
+    padding: 30px;
+    text-align: center;
+    background: #102b49;
+    color: white;
+}
+
+@media(max-width: 1050px) {
+    .hotel-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .search-box {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hero {
+        padding: 30px 20px;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .hotel-grid,
+    .search-box,
+    .details-content,
+    .booking-form {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-main img {
+        height: 260px;
+    }
+
+    .gallery-side {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 130px;
+    }
+
+    .gallery-side img {
+        height: 130px;
+    }
+
+    .amenities {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .booking-form .full,
+    .booking-form button {
+        grid-column: 1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav class="navbar">
+
+    <div class="logo">Travelora 🌍</div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="flights.html">Flights</a>
+        <a href="hotels.html" class="active">Hotels</a>
+        <a href="packages.html">Packages</a>
+        <a href="trips.html">My Trips</a>
+        <a href="profile.html">Profile</a>
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <!-- HOTEL HERO -->
+
+    <section class="hero">
+        <div>
+            <h1>Find Your Perfect Stay</h1>
+            <p>Discover beautiful hotels, luxury rooms and unforgettable experiences with Travelora.</p>
+        </div>
+    </section>
+
+    <!-- SEARCH -->
+
+    <section class="search-box">
+
+        <div class="field">
+            <label>Hotel City</label>
+            <input type="text" id="city" value="Varanasi">
+        </div>
+
+        <div class="field">
+            <label>Check-in Date</label>
+            <input type="date" id="checkin">
+        </div>
+
+        <div class="field">
+            <label>Check-out Date</label>
+            <input type="date" id="checkout">
+        </div>
+
+        <div class="field">
+            <label>Guests</label>
+            <select id="guests">
+                <option value="1">1 Guest</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5">5 Guests</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="searchHotels()">
+            <i class="fa fa-search"></i> Search Hotels
+        </button>
+
+    </section>
+
+    <!-- HOTEL LIST -->
+
+    <section id="hotelList">
+
+        <div class="section-heading">
+            <h2>Popular Hotels</h2>
+            <span id="hotelCount">8 Hotels</span>
+        </div>
+
+        <div class="hotel-grid" id="hotelGrid"></div>
+
+    </section>
+
+    <!-- HOTEL DETAILS -->
+
+    <section id="detailsPage">
+
+        <button class="btn back-btn" onclick="backToHotels()">
+            <i class="fa fa-arrow-left"></i> Back to Hotels
+        </button>
+
+        <div class="details-header">
+            <h2 id="detailName"></h2>
+            <p id="detailLocation"></p>
+            <div class="rating" id="detailRating"></div>
+        </div>
+
+        <div class="gallery">
+
+            <div class="gallery-main">
+                <img id="mainImage" src="" alt="Hotel main view">
+                <button class="prev" onclick="changePhoto(-1)">❮</button>
+                <button class="next" onclick="changePhoto(1)">❯</button>
+            </div>
+
+            <div class="gallery-side">
+                <img id="sideImage1" src="" alt="Hotel view" onclick="selectPhoto(1)">
+                <img id="sideImage2" src="" alt="Hotel view" onclick="selectPhoto(2)">
+            </div>
+
+        </div>
+
+        <div class="thumbnail-row" id="thumbnails"></div>
+
+        <div class="details-content">
+
+            <div class="details-box">
+
+                <h3>About This Hotel</h3>
+                <p id="detailDescription"></p>
+
+                <br>
+
+                <h3>Explore the Hotel</h3>
+
+                <div class="amenities">
+
+                    <div class="amenity">
+                        <i class="fa fa-bed"></i>Luxury Rooms
+                    </div>
+
+                    <div class="amenity">
+                        <i class="fa fa-water"></i>Swimming Pool
+                    </div>
+
+                    <div class="amenity">
+                        <i class="fa fa-utensils"></i>Restaurant
+                    </div>
+
+                    <div class="amenity">
+                        <i class="fa fa-dumbbell"></i>Fitness Centre
+                    </div>
+
+                    <div class="amenity">
+                        <i class="fa fa-wifi"></i>Free Wi-Fi
+                    </div>
+
+                    <div class="amenity">
+                        <i class="fa fa-car"></i>Parking
+                    </div>
+
+                    <div class="amenity">
+                        <i class="fa fa-spa"></i>Spa
+                    </div>
+
+                    <div class="amenity">
+                        <i class="fa fa-bell-concierge"></i>Reception
+                    </div>
+
+                    <div class="amenity">
+                        <i class="fa fa-snowflake"></i>AC Rooms
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="price-box">
+
+                <h3>Hotel Booking</h3>
+
+                <p>Enjoy a comfortable stay at your selected hotel.</p>
+
+                <div class="big-price" id="detailPrice"></div>
+
+                <p>Per room / per night</p>
+
+                <p>✔ Free Wi-Fi</p>
+                <p>✔ Comfortable accommodation</p>
+                <p>✔ Secure booking information</p>
+
+                <button class="btn" onclick="openBooking()">
+                    Book This Hotel →
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- BOOKING PAGE -->
+
+    <section id="bookingPage">
+
+        <button class="btn back-btn" onclick="backToDetails()">
+            <i class="fa fa-arrow-left"></i> Back to Hotel
+        </button>
+
+        <div class="booking-container">
+
+            <h2>Complete Your Hotel Booking</h2>
+
+            <p style="color:#718096;margin:10px 0 20px;">
+                Enter your details to reserve your selected hotel.
+            </p>
+
+            <div class="selected-hotel">
+                <img id="bookingImage" src="" alt="Selected hotel">
+                <div>
+                    <h3 id="bookingHotelName"></h3>
+                    <p id="bookingHotelLocation"></p>
+                </div>
+            </div>
+
+            <form id="hotelForm" class="booking-form">
+
+                <div>
+                    <label>Full Name *</label>
+                    <input type="text" id="customerName" placeholder="Enter your name" required>
+                </div>
+
+                <div>
+                    <label>Email Address *</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div>
+                    <label>Hotel City</label>
+                    <input type="text" id="bookingCity" readonly>
+                </div>
+
+                <div>
+                    <label>Phone Number *</label>
+                    <input type="tel" id="phone" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required>
+                </div>
+
+                <div>
+                    <label>Check-in Date *</label>
+                    <input type="date" id="bookingCheckin" required>
+                </div>
+
+                <div>
+                    <label>Check-out Date *</label>
+                    <input type="date" id="bookingCheckout" required>
+                </div>
+
+                <div>
+                    <label>Room Type *</label>
+                    <select id="roomType" required>
+                        <option value="">Select Room Type</option>
+                        <option>Standard Room</option>
+                        <option>Deluxe Room</option>
+                        <option>Luxury Suite</option>
+                        <option>Family Room</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Number of Rooms</label>
+                    <select id="rooms">
+                        <option value="1">1 Room</option>
+                        <option value="2">2 Rooms</option>
+                        <option value="3">3 Rooms</option>
+                        <option value="4">4 Rooms</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Number of Guests</label>
+                    <select id="bookingGuests">
+                        <option value="1">1 Guest</option>
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5 Guests</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Meal Plan</label>
+                    <select id="mealPlan">
+                        <option>Room Only</option>
+                        <option>Breakfast Included</option>
+                        <option>Breakfast & Dinner</option>
+                        <option>All Meals Included</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Payment Method *</label>
+                    <select id="payment" required>
+                        <option>UPI</option>
+                        <option>Credit Card</option>
+                        <option>Debit Card</option>
+                        <option>Net Banking</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Coupon Code</label>
+                    <input type="text" id="coupon" placeholder="Enter coupon code">
+                </div>
+
+                <div class="full">
+                    <label>Special Requirements</label>
+                    <input type="text" id="requirements" placeholder="Any special requirements?">
+                </div>
+
+                <div class="full total-box" id="totalBox">
+                    Select your dates to calculate the total price.
+                </div>
+
+                <button type="submit" class="btn">
+                    Confirm Hotel Booking
+                </button>
+
+            </form>
+
+            <div class="confirmation" id="confirmation"></div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<footer>
+    <h2>Travelora 🌍</h2>
+    <p>One Platform. Every Journey.</p>
+    <p style="margin-top:10px;font-size:12px;">
+        © 2026 Travelora. All Rights Reserved.
+    </p>
+</footer>
+
+<script>
+
+// HOTEL INFORMATION
+
+const hotels = [
+
+{
+name:"Taj Ganges",
+location:"Nadesar, Varanasi",
+price:8999,
+rating:4.7,
+description:"Explore an elegant hotel experience with beautifully designed rooms, peaceful gardens, comfortable accommodation and premium hospitality.",
+photos:[
+"https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200",
+"https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200",
+"https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200",
+"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200",
+"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200"
+]
+},
+
+{
+name:"Hotel Surya",
+location:"Varanasi Cantt",
+price:5499,
+rating:4.5,
+description:"A comfortable stay with attractive interiors, relaxing rooms, dining spaces and convenient guest facilities.",
+photos:[
+"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200",
+"https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200",
+"https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200",
+"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200"
+]
+},
+
+{
+name:"Radisson Hotel",
+location:"Sigra, Varanasi",
+price:6999,
+rating:4.6,
+description:"Enjoy modern hotel facilities, comfortable rooms, restaurant spaces and an elegant environment.",
+photos:[
+"https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200",
+"https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200",
+"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200",
+"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200"
+]
+},
+
+{
+name:"Hotel Heritage Inn",
+location:"Dashashwamedh Ghat, Varanasi",
+price:5999,
+rating:4.8,
+description:"Discover traditional-inspired interiors, inviting rooms and convenient access to the famous Varanasi ghats.",
+photos:[
+"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200",
+"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200",
+"https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200",
+"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200"
+]
+},
+
+{
+name:"The Pristine Hotel",
+location:"Cantt Road, Varanasi",
+price:4499,
+rating:4.4,
+description:"A modern accommodation option with relaxing spaces, well-designed interiors and essential hotel facilities.",
+photos:[
+"https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200",
+"https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200",
+"https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200",
+"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200"
+]
+},
+
+{
+name:"Clarks Varanasi",
+location:"Mall Road, Varanasi",
+price:6499,
+rating:4.6,
+description:"Experience a stylish hotel environment with spacious rooms, dining facilities and welcoming hospitality.",
+photos:[
+"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200",
+"https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200",
+"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200",
+"https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200"
+]
+},
+
+{
+name:"Amayaa Hotel",
+location:"Varanasi",
+price:4999,
+rating:4.3,
+description:"A contemporary hotel experience with attractive interiors, comfortable rooms and useful guest amenities.",
+photos:[
+"https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200",
+"https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200",
+"https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200",
+"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200"
+]
+},
+
+{
+name:"BrijRama Palace",
+location:"Darbhanga Ghat, Varanasi",
+price:7999,
+rating:4.7,
+description:"A heritage-style property offering beautiful architecture, traditional surroundings and an elegant stay experience.",
+photos:[
+"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200",
+"https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200",
+"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200",
+"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200"
+]
+}
+
+];
+
+let selectedHotel = null;
+let currentPhoto = 0;
+let discount = 0;
+
+const $ = id => document.getElementById(id);
+
+const money = amount =>
+"₹" + amount.toLocaleString("en-IN");
+
+function imageFallback(img) {
+    img.onerror = function() {
+        this.onerror = null;
+        this.src = "https://placehold.co/900x600/eaf3f8/087d9b?text=Travelora+Hotel";
+    };
+}
+
+// DISPLAY HOTELS
+
+function displayHotels(list) {
+
+    $("hotelGrid").innerHTML = "";
+
+    $("hotelCount").textContent = list.length + " Hotels Found";
+
+    if(!list.length) {
+        $("hotelGrid").innerHTML =
+        "<p>No hotels found. Try another search.</p>";
+        return;
+    }
+
+    list.forEach((hotel) => {
+
+        const index = hotels.indexOf(hotel);
+
+        const card = document.createElement("article");
+
+        card.className = "hotel-card";
+
+        card.innerHTML = `
+            <img src="${hotel.photos[0]}"
+                 alt="${hotel.name}"
+                 loading="lazy">
+
+            <div class="hotel-info">
+
+                <h3>${hotel.name}</h3>
+
+                <div class="location">
+                    <i class="fa fa-location-dot"></i>
+                    ${hotel.location}
+                </div>
+
+                <div class="rating">
+                    ★ ${hotel.rating} / 5
+                </div>
+
+                <div class="hotel-bottom">
+
+                    <div class="hotel-price">
+                        ${money(hotel.price)}
+                        <small>Per night</small>
+                    </div>
+
+                    <button class="btn" onclick="viewHotel(${index})">
+                        View Details
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        imageFallback(card.querySelector("img"));
+
+        $("hotelGrid").appendChild(card);
+
+    });
+
+}
+
+// SHOW HOTEL DETAILS
+
+function viewHotel(index) {
+
+    selectedHotel = hotels[index];
+    currentPhoto = 0;
+
+    $("hotelList").style.display = "none";
+    $("detailsPage").style.display = "block";
+    $("bookingPage").style.display = "none";
+
+    $("detailName").textContent = selectedHotel.name;
+
+    $("detailLocation").textContent =
+        "📍 " + selectedHotel.location;
+
+    $("detailRating").textContent =
+        "★ " + selectedHotel.rating + " / 5";
+
+    $("detailDescription").textContent =
+        selectedHotel.description;
+
+    $("detailPrice").textContent =
+        money(selectedHotel.price) + " / night";
+
+    showGallery();
+
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+// HOTEL PHOTO GALLERY
+
+function showGallery() {
+
+    $("mainImage").src = selectedHotel.photos[currentPhoto];
+
+    imageFallback($("mainImage"));
+
+    $("sideImage1").src =
+        selectedHotel.photos[(currentPhoto + 1) % selectedHotel.photos.length];
+
+    $("sideImage2").src =
+        selectedHotel.photos[(currentPhoto + 2) % selectedHotel.photos.length];
+
+    const thumbnails = $("thumbnails");
+
+    thumbnails.innerHTML = "";
+
+    selectedHotel.photos.forEach((photo,index) => {
+
+        const img = document.createElement("img");
+
+        img.src = photo;
+
+        img.alt = selectedHotel.name + " view " + (index + 1);
+
+        if(index === currentPhoto) {
+            img.classList.add("active");
+        }
+
+        imageFallback(img);
+
+        img.onclick = () => {
+            currentPhoto = index;
+            showGallery();
+        };
+
+        thumbnails.appendChild(img);
+
+    });
+
+}
+
+function changePhoto(direction) {
+
+    currentPhoto += direction;
+
+    if(currentPhoto < 0) {
+        currentPhoto = selectedHotel.photos.length - 1;
+    }
+
+    if(currentPhoto >= selectedHotel.photos.length) {
+        currentPhoto = 0;
+    }
+
+    showGallery();
+
+}
+
+function selectPhoto(number) {
+
+    currentPhoto = (currentPhoto + number) % selectedHotel.photos.length;
+
+    showGallery();
+
+}
+
+// SEARCH HOTELS
+
+function searchHotels() {
+
+    const city = $("city").value.trim().toLowerCase();
+
+    const checkin = $("checkin").value;
+    const checkout = $("checkout").value;
+
+    if(checkin && checkout && checkout <= checkin) {
+        alert("Check-out must be after check-in.");
+        return;
+    }
+
+    if(checkin && checkin < new Date().toISOString().split("T")[0]) {
+        alert("Please select a valid future check-in date.");
+        return;
+    }
+
+    const filtered = hotels.filter(hotel =>
+        hotel.location.toLowerCase().includes(city) ||
+        hotel.name.toLowerCase().includes(city)
+    );
+
+    $("detailsPage").style.display = "none";
+    $("bookingPage").style.display = "none";
+    $("hotelList").style.display = "block";
+
+    displayHotels(filtered);
+
+}
+
+// BACK BUTTONS
+
+function backToHotels() {
+
+    $("detailsPage").style.display = "none";
+    $("bookingPage").style.display = "none";
+    $("hotelList").style.display = "block";
+
+    window.scrollTo({top:0,behavior:"smooth"});
+
+}
+
+function backToDetails() {
+
+    $("bookingPage").style.display = "none";
+    $("detailsPage").style.display = "block";
+
+    window.scrollTo({top:0,behavior:"smooth"});
+
+}
+
+// OPEN BOOKING
+
+function openBooking() {
+    function openBooking() {
+
+    if (!selectedHotel) {
+        alert("Please select a hotel first.");
+        return;
+    }
+
+    const city =
+        document.getElementById("city").value.trim() || "Varanasi";
+
+    const checkIn =
+        document.getElementById("checkin").value;
+
+    const checkOut =
+        document.getElementById("checkout").value;
+
+    if (!checkIn || !checkOut || checkOut <= checkIn) {
+        alert("Please select valid check-in and check-out dates.");
+        return;
+    }
+
+    const hotelBookingData = {
+
+        name: selectedHotel.name,
+
+        location: selectedHotel.location,
+
+        price: selectedHotel.price,
+
+        image: selectedHotel.photos[0],
+
+        city: city,
+
+        checkIn: checkIn,
+
+        checkOut: checkOut
+
+    };
+
+    localStorage.setItem(
+        "traveloraSelectedHotel",
+        JSON.stringify(hotelBookingData)
+    );
+
+    window.location.href =
+        "booking.html?place=" +
+        encodeURIComponent(city) +
+        "&service=Hotel";
+
+}
+
+}
+
+// CALCULATE BOOKING TOTAL
+
+function calculateTotal() {
+
+    if(!selectedHotel) return;
+
+    const start = $("bookingCheckin").value;
+    const end = $("bookingCheckout").value;
+
+    if(!start || !end || end <= start) {
+        $("totalBox").textContent =
+            "Select valid dates to calculate the total price.";
+        return;
+    }
+
+    const nights = Math.round(
+        (new Date(end + "T00:00:00") -
+         new Date(start + "T00:00:00")) / 86400000
+    );
+
+    const rooms = Number($("rooms").value);
+
+    const subtotal = selectedHotel.price * nights * rooms;
+
+    const total = Math.max(0, subtotal - discount);
+
+    $("totalBox").textContent =
+        "Total for " + nights + " night(s), " +
+        rooms + " room(s): " + money(total);
+
+}
+
+["bookingCheckin","bookingCheckout","rooms"].forEach(id => {
+    $(id).addEventListener("change", calculateTotal);
+});
+
+// BOOKING FORM
+
+$("hotelForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const checkin = $("bookingCheckin").value;
+    const checkout = $("bookingCheckout").value;
+
+    if(!checkin || !checkout || checkout <= checkin) {
+        alert("Please enter valid booking dates.");
+        return;
+    }
+
+    if(checkin < new Date().toISOString().split("T")[0]) {
+        alert("Check-in date cannot be in the past.");
+        return;
+    }
+
+    const nights = Math.round(
+        (new Date(checkout + "T00:00:00") -
+         new Date(checkin + "T00:00:00")) / 86400000
+    );
+
+    const rooms = Number($("rooms").value);
+
+    const subtotal = selectedHotel.price * nights * rooms;
+
+    const total = Math.max(0, subtotal - discount);
+
+    const booking = {
+
+        bookingId: "TRH" + Date.now(),
+
+        service: "Hotel",
+
+        hotel: selectedHotel.name,
+
+        destination: $("bookingCity").value,
+
+        location: selectedHotel.location,
+
+        customerName: $("customerName").value,
+
+        email: $("email").value,
+
+        phone: $("phone").value,
+
+        checkin: checkin,
+
+        checkout: checkout,
+
+        nights: nights,
+
+        roomType: $("roomType").value,
+
+        rooms: rooms,
+
+        guests: $("bookingGuests").value,
+
+        mealPlan: $("mealPlan").value,
+
+        paymentMethod: $("payment").value,
+
+        coupon: $("coupon").value,
+
+        specialRequirements: $("requirements").value,
+
+        bookingValue: total,
+
+        finalPrice: total,
+
+        status: "Confirmed",
+
+        bookingDate: new Date().toISOString()
+
+    };
+
+    // Save hotel booking in browser
+
+    let bookings = JSON.parse(
+        localStorage.getItem("traveloraHotelBookings") || "[]"
+    );
+
+    bookings.push(booking);
+
+    localStorage.setItem(
+        "traveloraHotelBookings",
+        JSON.stringify(bookings)
+    );
+
+    // Confirmation
+
+    $("confirmation").style.display = "block";
+
+    $("confirmation").innerHTML = `
+        <h2>✓ Booking Confirmed!</h2>
+
+        <p><strong>Booking ID:</strong> ${booking.bookingId}</p>
+
+        <p><strong>Hotel:</strong> ${booking.hotel}</p>
+
+        <p><strong>Customer:</strong> ${booking.customerName}</p>
+
+        <p><strong>Check-in:</strong> ${booking.checkin}</p>
+
+        <p><strong>Check-out:</strong> ${booking.checkout}</p>
+
+        <p><strong>Rooms:</strong> ${booking.rooms}</p>
+
+        <p><strong>Total Amount:</strong> ${money(total)}</p>
+
+        <p>Your demo booking has been saved successfully!</p>
+    `;
+
+    $("confirmation").scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+});
+
+// SET MINIMUM DATES
+
+const today = new Date().toISOString().split("T")[0];
+
+$("checkin").min = today;
+$("checkout").min = today;
+$("bookingCheckin").min = today;
+$("bookingCheckout").min = today;
+
+// INITIALIZE
+
+displayHotels(hotels);
+
+</script>
+
+</body>
+</html>

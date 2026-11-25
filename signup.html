@@ -1,0 +1,1235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Travelora - Sign Up</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .signup-page {
+            min-height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .signup-box {
+            width: 450px;
+            max-width: 100%;
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+        }
+
+        .signup-box h1 {
+            color: #073b5c;
+            margin-bottom: 10px;
+        }
+
+        .signup-box > div > p {
+            color: #667085;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .signup-box input,
+        .signup-box select {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        .signup-box button {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .otp-step,
+        .details-step {
+            display: none;
+        }
+
+        .otp-info {
+            background: #eef8f7;
+            color: #073b5c;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .demo-otp {
+            background: #fff4e8;
+            color: #9a4d00;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #signupOTP {
+            text-align: center;
+            font-size: 22px;
+            letter-spacing: 8px;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #667085;
+        }
+
+        .login-link a {
+            color: #ff7200;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #eef2f6 !important;
+            color: #073b5c !important;
+            margin-top: 10px !important;
+        }
+
+        .back-button:hover {
+            background: #dfe7ef !important;
+        }
+
+        .resend-otp {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #0e918c;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .resend-otp:hover {
+            text-decoration: underline;
+        }
+
+        .signup-error {
+            color: #d92d20;
+            font-size: 14px;
+            margin-top: 10px;
+            min-height: 18px;
+        }
+
+        .otp-timer {
+            text-align: center;
+            color: #667085;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+        <div class="logo">
+            Travelora ✈️
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="destinations.html">Destinations</a>
+            <a href="offers.html">Offers</a>
+            <a href="packages.html">Packages</a>
+            <a href="activities.html">Activities</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+
+    <!-- SIGNUP SECTION -->
+
+    <section class="signup-page">
+
+        <div class="signup-box">
+
+            <!-- STEP 1: CONTACT -->
+
+            <div id="contactStep">
+
+                <h1>Create Your Account ✨</h1>
+
+                <p>
+                    Sign up with your email address or phone number
+                    to start your Travelora journey.
+                </p>
+
+                <input
+                    type="text"
+                    id="signupContact"
+                    placeholder="Email Address or Phone Number"
+                    autocomplete="username"
+                >
+
+                <button type="button" onclick="continueSignup()">
+                    Continue
+                </button>
+
+                <div id="contactError" class="signup-error"></div>
+
+                <div class="login-link">
+                    Already have an account?
+                    <a href="login.html">Login</a>
+                </div>
+
+            </div>
+
+
+            <!-- STEP 2: PERSONAL DETAILS -->
+
+            <div id="detailsStep" class="details-step">
+
+                <h1>Tell Us About You 👋</h1>
+
+                <p>
+                    Add your details before verifying your contact.
+                </p>
+
+                <input
+                    type="text"
+                    id="signupName"
+                    placeholder="Full Name"
+                    autocomplete="name"
+                    maxlength="80"
+                >
+
+                <select id="signupGender">
+
+                    <option value="">Select Gender</option>
+
+                    <option value="Male">Male</option>
+
+                    <option value="Female">Female</option>
+
+                    <option value="Other">Other</option>
+
+                    <option value="Prefer not to say">
+                        Prefer not to say
+                    </option>
+
+                </select>
+
+                <button type="button" onclick="sendSignupOTP()">
+                    Send OTP
+                </button>
+
+                <div id="detailsError" class="signup-error"></div>
+
+                <button
+                    type="button"
+                    class="back-button"
+                    onclick="backToContact()"
+                >
+                    Back
+                </button>
+
+            </div>
+
+
+            <!-- STEP 3: OTP -->
+
+            <div id="otpStep" class="otp-step">
+
+                <h1>Verify Your Contact</h1>
+
+                <p>
+                    Enter the OTP generated for your registered contact.
+                </p>
+
+                <div class="otp-info">
+                    This project currently uses a demo OTP.
+                    Real email and SMS delivery is not connected.
+                </div>
+
+                <div id="demoOtp" class="demo-otp"></div>
+
+                <div id="otpTimer" class="otp-timer">
+                    OTP expires in 05:00
+                </div>
+
+                <input
+                    type="text"
+                    id="signupOTP"
+                    maxlength="6"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    placeholder="Enter OTP"
+                >
+
+                <button type="button" onclick="verifySignupOTP()">
+                    Verify OTP
+                </button>
+
+                <div id="otpError" class="signup-error"></div>
+
+                <span
+                    class="resend-otp"
+                    onclick="resendSignupOTP()"
+                >
+                    Resend OTP
+                </span>
+
+                <button
+                    type="button"
+                    class="back-button"
+                    onclick="backToDetails()"
+                >
+                    Back
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div>
+            <h2>Travelora ✈️</h2>
+            <p>Your trusted travel booking partner.</p>
+        </div>
+
+        <div>
+            <h3>Explore</h3>
+            <a href="destinations.html">Destinations</a>
+            <a href="offers.html">Offers</a>
+            <a href="packages.html">Packages</a>
+            <a href="activities.html">Activities</a>
+        </div>
+
+        <div>
+            <h3>Support</h3>
+            <a href="contact.html">Help & Contact</a>
+            <a href="trips.html">Manage Booking</a>
+        </div>
+
+    </footer>
+
+
+    <!-- EXISTING MAIN JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+
+    <!-- SIGNUP JAVASCRIPT -->
+
+    <script>
+
+        /* =========================================
+           STORAGE KEYS
+        ========================================= */
+
+        const USERS_KEY = "traveloraUsers";
+
+        const SIGNUP_OTP_KEY = "signupOTP";
+
+        const SIGNUP_CONTACT_KEY = "signupContact";
+
+        const SIGNUP_TYPE_KEY = "signupContactType";
+
+        const SIGNUP_VERIFIED_KEY = "signupOTPVerified";
+
+        const SIGNUP_EXPIRY_KEY = "signupOTPExpiry";
+
+        let signupTimerInterval = null;
+
+
+        /* =========================================
+           READ REGISTERED USERS
+        ========================================= */
+
+        function getSignupUsers() {
+
+            try {
+
+                const users = JSON.parse(
+                    localStorage.getItem(USERS_KEY) || "[]"
+                );
+
+                return Array.isArray(users) ? users : [];
+
+            } catch (error) {
+
+                console.error("Error reading users:", error);
+
+                return [];
+
+            }
+
+        }
+
+
+        /* =========================================
+           SAVE REGISTERED USERS
+        ========================================= */
+
+        function saveSignupUsers(users) {
+
+            try {
+
+                localStorage.setItem(
+                    USERS_KEY,
+                    JSON.stringify(users)
+                );
+
+                return true;
+
+            } catch (error) {
+
+                console.error("Error saving users:", error);
+
+                return false;
+
+            }
+
+        }
+
+
+        /* =========================================
+           NORMALIZE CONTACT
+        ========================================= */
+
+        function normalizeContact(contact, type) {
+
+            if (type === "email") {
+
+                return contact.trim().toLowerCase();
+
+            }
+
+            return contact.replace(/[\s-]/g, "");
+
+        }
+
+
+        /* =========================================
+           CHECK DUPLICATE USER
+        ========================================= */
+
+        function isContactRegistered(contact, type) {
+
+            const users = getSignupUsers();
+
+            const normalizedContact =
+                normalizeContact(contact, type);
+
+            return users.some(function(user) {
+
+                const email = String(user.email || "")
+                    .trim()
+                    .toLowerCase();
+
+                const phone = String(user.phone || "")
+                    .replace(/[\s-]/g, "");
+
+                const savedContact = String(user.contact || "")
+                    .trim()
+                    .toLowerCase();
+
+                if (type === "email") {
+
+                    return (
+                        email === normalizedContact ||
+                        savedContact === normalizedContact
+                    );
+
+                }
+
+                return (
+                    phone === normalizedContact ||
+                    savedContact === normalizedContact
+                );
+
+            });
+
+        }
+
+
+        /* =========================================
+           GENERATE RANDOM SIX-DIGIT OTP
+        ========================================= */
+
+        function generateSignupOTP() {
+
+            return String(
+                Math.floor(100000 + Math.random() * 900000)
+            );
+
+        }
+
+
+        /* =========================================
+           SHOW SIGNUP STEP
+        ========================================= */
+
+        function showSignupStep(step) {
+
+            document.getElementById("contactStep")
+                .style.display = "none";
+
+            document.getElementById("detailsStep")
+                .style.display = "none";
+
+            document.getElementById("otpStep")
+                .style.display = "none";
+
+            document.getElementById(step)
+                .style.display = "block";
+
+        }
+
+
+        /* =========================================
+           CONTINUE SIGNUP
+        ========================================= */
+
+        function continueSignup() {
+
+            const contactInput =
+                document.getElementById("signupContact");
+
+            const contact = contactInput.value.trim();
+
+            const error =
+                document.getElementById("contactError");
+
+            error.innerText = "";
+
+
+            if (!contact) {
+
+                error.innerText =
+                    "Please enter your email address or phone number.";
+
+                contactInput.focus();
+
+                return;
+
+            }
+
+
+            const isEmail =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+
+            const isPhone =
+                /^\+?[0-9]{10,15}$/.test(
+                    contact.replace(/[\s-]/g, "")
+                );
+
+
+            if (!isEmail && !isPhone) {
+
+                error.innerText =
+                    "Please enter a valid email address or phone number.";
+
+                contactInput.focus();
+
+                return;
+
+            }
+
+
+            const contactType = isEmail ? "email" : "phone";
+
+            const normalizedContact =
+                normalizeContact(contact, contactType);
+
+
+            if (
+                isContactRegistered(
+                    normalizedContact,
+                    contactType
+                )
+            ) {
+
+                alert(
+                    "This contact is already registered. Please login."
+                );
+
+                window.location.href = "login.html";
+
+                return;
+
+            }
+
+
+            localStorage.setItem(
+                SIGNUP_CONTACT_KEY,
+                normalizedContact
+            );
+
+            localStorage.setItem(
+                SIGNUP_TYPE_KEY,
+                contactType
+            );
+
+
+            showSignupStep("detailsStep");
+
+        }
+
+
+        /* =========================================
+           SEND DEMO OTP
+        ========================================= */
+
+        function sendSignupOTP() {
+
+            const name =
+                document.getElementById("signupName")
+                .value.trim();
+
+            const gender =
+                document.getElementById("signupGender")
+                .value;
+
+            const error =
+                document.getElementById("detailsError");
+
+            error.innerText = "";
+
+
+            if (!name) {
+
+                error.innerText = "Please enter your full name.";
+
+                return;
+
+            }
+
+
+            if (name.length < 2) {
+
+                error.innerText =
+                    "Name must contain at least 2 characters.";
+
+                return;
+
+            }
+
+
+            if (!gender) {
+
+                error.innerText = "Please select your gender.";
+
+                return;
+
+            }
+
+
+            const contact =
+                localStorage.getItem(SIGNUP_CONTACT_KEY);
+
+            const contactType =
+                localStorage.getItem(SIGNUP_TYPE_KEY);
+
+
+            if (!contact || !contactType) {
+
+                alert(
+                    "Please enter your email address or phone number again."
+                );
+
+                showSignupStep("contactStep");
+
+                return;
+
+            }
+
+
+            if (
+                isContactRegistered(contact, contactType)
+            ) {
+
+                alert(
+                    "This contact is already registered. Please login."
+                );
+
+                window.location.href = "login.html";
+
+                return;
+
+            }
+
+
+            /* Generate OTP */
+
+            const otp = generateSignupOTP();
+
+
+            /* Save OTP */
+
+            localStorage.setItem(
+                SIGNUP_OTP_KEY,
+                otp
+            );
+
+
+            /* Save OTP expiry time: 5 minutes */
+
+            const expiryTime =
+                Date.now() + (5 * 60 * 1000);
+
+            localStorage.setItem(
+                SIGNUP_EXPIRY_KEY,
+                String(expiryTime)
+            );
+
+
+            /* Mark OTP as not verified */
+
+            localStorage.setItem(
+                SIGNUP_VERIFIED_KEY,
+                "false"
+            );
+
+
+            /* Display OTP for project demonstration */
+
+            document.getElementById("demoOtp").innerText =
+                "Demo OTP: " + otp;
+
+
+            document.getElementById("signupOTP").value = "";
+
+            document.getElementById("otpError").innerText = "";
+
+
+            /* Move to OTP step */
+
+            showSignupStep("otpStep");
+
+
+            /* Start countdown */
+
+            startSignupOTPTimer();
+
+        }
+
+
+        /* =========================================
+           OTP COUNTDOWN TIMER
+        ========================================= */
+
+        function startSignupOTPTimer() {
+
+            if (signupTimerInterval) {
+
+                clearInterval(signupTimerInterval);
+
+            }
+
+
+            function updateTimer() {
+
+                const expiryTime = Number(
+                    localStorage.getItem(SIGNUP_EXPIRY_KEY)
+                );
+
+                const remaining =
+                    expiryTime - Date.now();
+
+
+                if (remaining <= 0) {
+
+                    document.getElementById("otpTimer")
+                        .innerText = "OTP expired. Please resend OTP.";
+
+                    clearInterval(signupTimerInterval);
+
+                    signupTimerInterval = null;
+
+                    return;
+
+                }
+
+
+                const minutes = Math.floor(
+                    remaining / 60000
+                );
+
+                const seconds = Math.floor(
+                    (remaining % 60000) / 1000
+                );
+
+
+                document.getElementById("otpTimer")
+                    .innerText =
+                    "OTP expires in " +
+                    String(minutes).padStart(2, "0") +
+                    ":" +
+                    String(seconds).padStart(2, "0");
+
+            }
+
+
+            updateTimer();
+
+            signupTimerInterval =
+                setInterval(updateTimer, 1000);
+
+        }
+
+
+        /* =========================================
+           VERIFY OTP
+        ========================================= */
+
+        function verifySignupOTP() {
+
+            const enteredOTP =
+                document.getElementById("signupOTP")
+                .value.trim();
+
+            const correctOTP =
+                localStorage.getItem(SIGNUP_OTP_KEY);
+
+            const expiryTime = Number(
+                localStorage.getItem(SIGNUP_EXPIRY_KEY)
+            );
+
+            const error =
+                document.getElementById("otpError");
+
+            error.innerText = "";
+
+
+            if (!enteredOTP) {
+
+                error.innerText = "Please enter the OTP.";
+
+                return;
+
+            }
+
+
+            if (!/^[0-9]{6}$/.test(enteredOTP)) {
+
+                error.innerText =
+                    "Please enter a valid six-digit OTP.";
+
+                return;
+
+            }
+
+
+            if (!correctOTP || !expiryTime) {
+
+                error.innerText =
+                    "OTP not found. Please resend the OTP.";
+
+                return;
+
+            }
+
+
+            if (Date.now() > expiryTime) {
+
+                error.innerText =
+                    "Your OTP has expired. Please resend OTP.";
+
+                return;
+
+            }
+
+
+            if (enteredOTP !== correctOTP) {
+
+                error.innerText =
+                    "Incorrect OTP. Please try again.";
+
+                return;
+
+            }
+
+
+            /* Mark OTP verified */
+
+            localStorage.setItem(
+                SIGNUP_VERIFIED_KEY,
+                "true"
+            );
+
+
+            if (signupTimerInterval) {
+
+                clearInterval(signupTimerInterval);
+
+                signupTimerInterval = null;
+
+            }
+
+
+            /* Create account after verification */
+
+            createAccount();
+
+        }
+
+
+        /* =========================================
+           RESEND OTP
+        ========================================= */
+
+        function resendSignupOTP() {
+
+            const contact =
+                localStorage.getItem(SIGNUP_CONTACT_KEY);
+
+            const contactType =
+                localStorage.getItem(SIGNUP_TYPE_KEY);
+
+
+            if (!contact || !contactType) {
+
+                alert(
+                    "Signup session not found. Please start again."
+                );
+
+                showSignupStep("contactStep");
+
+                return;
+
+            }
+
+
+            const otp = generateSignupOTP();
+
+
+            localStorage.setItem(
+                SIGNUP_OTP_KEY,
+                otp
+            );
+
+
+            localStorage.setItem(
+                SIGNUP_EXPIRY_KEY,
+                String(Date.now() + (5 * 60 * 1000))
+            );
+
+
+            localStorage.setItem(
+                SIGNUP_VERIFIED_KEY,
+                "false"
+            );
+
+
+            document.getElementById("demoOtp").innerText =
+                "New Demo OTP: " + otp;
+
+
+            document.getElementById("signupOTP").value = "";
+
+            document.getElementById("otpError").innerText = "";
+
+
+            startSignupOTPTimer();
+
+
+            alert("A new demo OTP has been generated.");
+
+        }
+
+
+        /* =========================================
+           CREATE ACCOUNT
+        ========================================= */
+
+        function createAccount() {
+
+            const name =
+                document.getElementById("signupName")
+                .value.trim();
+
+            const gender =
+                document.getElementById("signupGender")
+                .value;
+
+            const contact =
+                localStorage.getItem(SIGNUP_CONTACT_KEY);
+
+            const contactType =
+                localStorage.getItem(SIGNUP_TYPE_KEY);
+
+            const otpVerified =
+                localStorage.getItem(SIGNUP_VERIFIED_KEY);
+
+
+            /* Verify OTP status */
+
+            if (otpVerified !== "true") {
+
+                alert(
+                    "Please verify your OTP before creating your account."
+                );
+
+                return;
+
+            }
+
+
+            if (!name || !gender || !contact || !contactType) {
+
+                alert(
+                    "Some signup details are missing. Please start again."
+                );
+
+                showSignupStep("contactStep");
+
+                return;
+
+            }
+
+
+            /* Check duplicate contact */
+
+            if (
+                isContactRegistered(contact, contactType)
+            ) {
+
+                alert(
+                    "This account already exists. Please login."
+                );
+
+                window.location.href = "login.html";
+
+                return;
+
+            }
+
+
+            /* Read existing users */
+
+            const users = getSignupUsers();
+
+
+            /* Generate unique user ID */
+
+            const userId =
+                "USR-" +
+                Date.now() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .slice(2, 7)
+                    .toUpperCase();
+
+
+            /* Create user record */
+
+            const newUser = {
+
+                id: userId,
+
+                userId: userId,
+
+                name: name,
+
+                email: contactType === "email"
+                    ? contact
+                    : "",
+
+                phone: contactType === "phone"
+                    ? contact
+                    : "",
+
+                contact: contact,
+
+                gender: gender,
+
+                role: "user",
+
+                createdAt: new Date().toISOString(),
+
+                registeredOn: new Date().toISOString(),
+
+                status: "Active",
+
+                totalBookings: 0,
+
+                totalSpent: 0
+
+            };
+
+
+            /* Add new user */
+
+            users.unshift(newUser);
+
+
+            /* Save user records */
+
+            const saved = saveSignupUsers(users);
+
+
+            if (!saved) {
+
+                alert(
+                    "Unable to save your account. Please try again."
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================
+               SET CURRENT USER SESSION
+            ===================================== */
+
+            localStorage.setItem("userId", userId);
+
+            localStorage.setItem("userName", name);
+
+            localStorage.setItem(
+                "userEmail",
+                newUser.email
+            );
+
+            localStorage.setItem(
+                "userPhone",
+                newUser.phone
+            );
+
+            localStorage.setItem(
+                "userGender",
+                gender
+            );
+
+            localStorage.setItem(
+                "userRole",
+                "user"
+            );
+
+            localStorage.setItem(
+                "isLoggedIn",
+                "true"
+            );
+
+
+            /* =====================================
+               CLEAR TEMPORARY SIGNUP DATA
+            ===================================== */
+
+            localStorage.removeItem(SIGNUP_OTP_KEY);
+
+            localStorage.removeItem(SIGNUP_CONTACT_KEY);
+
+            localStorage.removeItem(SIGNUP_TYPE_KEY);
+
+            localStorage.removeItem(SIGNUP_VERIFIED_KEY);
+
+            localStorage.removeItem(SIGNUP_EXPIRY_KEY);
+
+
+            /* =====================================
+               SUCCESS
+            ===================================== */
+
+            alert(
+                "Account created successfully!\n\n" +
+                "Welcome to Travelora, " + name + "!"
+            );
+
+
+            window.location.href = "index.html";
+
+        }
+
+
+        /* =========================================
+           BACK TO CONTACT
+        ========================================= */
+
+        function backToContact() {
+
+            showSignupStep("contactStep");
+
+        }
+
+
+        /* =========================================
+           BACK TO PERSONAL DETAILS
+        ========================================= */
+
+        function backToDetails() {
+
+            showSignupStep("detailsStep");
+
+        }
+
+
+        /* =========================================
+           PAGE INITIALIZATION
+        ========================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                const contact =
+                    localStorage.getItem(SIGNUP_CONTACT_KEY);
+
+                const contactType =
+                    localStorage.getItem(SIGNUP_TYPE_KEY);
+
+                const otp =
+                    localStorage.getItem(SIGNUP_OTP_KEY);
+
+                const expiry =
+                    Number(
+                        localStorage.getItem(SIGNUP_EXPIRY_KEY)
+                    );
+
+
+                if (
+                    contact &&
+                    contactType &&
+                    otp &&
+                    expiry > Date.now()
+                ) {
+
+                    showSignupStep("otpStep");
+
+                    document.getElementById("demoOtp")
+                        .innerText = "Demo OTP: " + otp;
+
+                    startSignupOTPTimer();
+
+                } else if (contact && contactType) {
+
+                    showSignupStep("detailsStep");
+
+                } else {
+
+                    showSignupStep("contactStep");
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
